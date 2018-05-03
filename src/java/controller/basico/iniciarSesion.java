@@ -7,7 +7,6 @@ package controller.basico;
 
 import DAO.InfinitiComicsDAO;
 import entities.User;
-import exeption.InfinityException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -22,8 +21,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author pablourbano
  */
-public class registro extends HttpServlet {
-    
+public class iniciarSesion extends HttpServlet {
+
     InfinitiComicsDAO dao = new InfinitiComicsDAO();
 
     /**
@@ -39,26 +38,21 @@ public class registro extends HttpServlet {
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            String nombre = request.getParameter("username");
+            String password = request.getParameter("password");
+            dao.conectar();
             
-            String nombre = request.getParameter("nombre");
-            String username = request.getParameter("username");
-            String pass = request.getParameter("password");
-            String ciudad = request.getParameter("ciudad");
-            String tipo = request.getParameter("tipo");
-            
-            User u = new User(nombre, username, pass, 0, tipo, tipo);
-            try {
-                dao.conectar();
-                dao.insertUser(u);
-                request.setAttribute("status", "Usuario dado de alta");
-            } catch (InfinityException ex) {
+            if(dao.valUser(nombre, password)){
                 
-            } catch (SQLException ex) {
-                Logger.getLogger(registro.class.getName()).log(Level.SEVERE, null, ex);
+                User user = dao.getUser(nombre);
+                request.getSession(true).setAttribute("user", user);
+                dao.descoectar();
+                response.sendRedirect(request.getContextPath() + "/menu.jsp");
+                
+            }else{
+                dao.descoectar();
+                request.getRequestDispatcher("/final.jsp").forward(request, response);
             }
-            dao.descoectar();
-            request.getRequestDispatcher("/final.jsp").forward(request, response);
-            
         }
     }
 
@@ -77,7 +71,7 @@ public class registro extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(registro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(iniciarSesion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -95,7 +89,7 @@ public class registro extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(registro.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(iniciarSesion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
