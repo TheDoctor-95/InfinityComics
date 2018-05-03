@@ -6,6 +6,7 @@
 package DAO;
 
 import entities.User;
+import exeption.InfinityException;
 import java.sql.PreparedStatement;
 import java.io.BufferedReader;
 import java.io.File;
@@ -16,6 +17,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 /**
  *
@@ -78,7 +80,11 @@ public class InfinitiComicsDAO {
         }
     }
     
-    public void insertUser(User u) throws SQLException{
+    public void insertUser(User u) throws SQLException, InfinityException{
+        User aux = getUser(u.getUsername());
+        if(aux!=null){
+            throw new InfinityException(0);
+        }
         
         String query = "INSERT INTO user VALUES (?,?,?,?,?,?)";
         PreparedStatement ps = connection.prepareStatement(query);
@@ -91,6 +97,22 @@ public class InfinitiComicsDAO {
         ps.setString(6, u.getType());
         
         ps.executeUpdate();
+    }
+    
+    public User getUser(String username) throws SQLException{
+        String query = "SELECT * FROM user WHERE username='"+username+"'";
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        User u= new User();;
+        if(rs.next()){
+            u.setUsername(rs.getString("username"));
+            u.setNombre(rs.getString("nombre"));
+            u.setPasswoed(rs.getString("password"));
+            u.setCash(rs.getDouble("cash"));
+            u.setCity(rs.getString("city"));
+            u.setType(rs.getString("type"));
+        }
+        return u;
     }
     
     public boolean valUser(String username, String password) throws SQLException{

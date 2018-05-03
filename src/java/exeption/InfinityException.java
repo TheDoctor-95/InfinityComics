@@ -21,8 +21,8 @@ public class InfinityException extends Exception {
     public String getMessage() {
         switch (this.code) {
             //Errores USER
-            case 1:
-                return "";
+            case 0:
+                return "El usuario ya existe";
             //ERRORES COMICS
             case 10:
                 return "";
