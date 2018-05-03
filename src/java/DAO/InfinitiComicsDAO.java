@@ -91,7 +91,7 @@ public class InfinitiComicsDAO {
         
         ps.setString(1, u.getNombre());
         ps.setString(2, u.getUsername());
-        ps.setString(3, u.getPasswoed());
+        ps.setString(3, u.getPassword());
         ps.setDouble(4, u.getCash());
         ps.setString(5, u.getCity());
         ps.setString(6, u.getType());

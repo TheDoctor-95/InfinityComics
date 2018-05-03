@@ -14,7 +14,7 @@ import java.util.List;
 public class User {
     private String nombre;
     private String username;
-    private String passwoed;
+    private String password;
     private double cash;
     private String city;
     private String type;
@@ -22,12 +22,21 @@ public class User {
     private List<Inventory> inventario;
     private List<Coleccion> following;
 
+    public User(String nombre, String username, String password, double cash, String city, String type) {
+        this.nombre = nombre;
+        this.username = username;
+        this.password = password;
+        this.cash = cash;
+        this.city = city;
+        this.type = type;
+    }
+
     public User() {
     }
 
-    public User(String username, String passwoed, double cash, String city, String type, List<Inventory> inventario, List<Coleccion> following) {
+    public User(String username, String password, double cash, String city, String type, List<Inventory> inventario, List<Coleccion> following) {
         this.username = username;
-        this.passwoed = passwoed;
+        this.password = password;
         this.cash = cash;
         this.city = city;
         this.type = type;
@@ -53,12 +62,12 @@ public class User {
         this.username = username;
     }
 
-    public String getPasswoed() {
-        return passwoed;
+    public String getPassword() {
+        return password;
     }
 
-    public void setPasswoed(String passwoed) {
-        this.passwoed = passwoed;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public double getCash() {
