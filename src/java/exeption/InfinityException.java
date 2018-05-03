@@ -23,7 +23,6 @@ public class InfinityException extends Exception {
             //Errores USER
             case 1:
                 return "";
-
             //ERRORES COMICS
             case 10:
                 return "";
