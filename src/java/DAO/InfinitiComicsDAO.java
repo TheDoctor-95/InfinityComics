@@ -81,8 +81,8 @@ public class InfinitiComicsDAO {
     }
     
     public void insertUser(User u) throws SQLException, InfinityException{
-        User aux = getUser(u.getUsername());
-        if(aux!=null){
+        
+        if(existUser(u.getUsername())){
             throw new InfinityException(0);
         }
         
@@ -113,6 +113,16 @@ public class InfinitiComicsDAO {
             u.setType(rs.getString("type"));
         }
         return u;
+    }
+    
+     public boolean existUser(String username) throws SQLException{
+        String query = "SELECT * FROM user WHERE username='"+username+"'";
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        if(rs.next()){
+            return true;
+        }
+        return false;
     }
     
     public boolean valUser(String username, String password) throws SQLException{
