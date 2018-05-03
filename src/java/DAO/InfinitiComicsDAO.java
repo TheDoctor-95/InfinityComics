@@ -107,7 +107,7 @@ public class InfinitiComicsDAO {
         if(rs.next()){
             u.setUsername(rs.getString("username"));
             u.setNombre(rs.getString("nombre"));
-            u.setPasswoed(rs.getString("password"));
+            u.setPassword(rs.getString("password"));
             u.setCash(rs.getDouble("cash"));
             u.setCity(rs.getString("city"));
             u.setType(rs.getString("type"));
