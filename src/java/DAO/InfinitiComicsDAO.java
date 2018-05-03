@@ -28,9 +28,9 @@ public class InfinitiComicsDAO {
      * @throws SQLException
      */
     public void conectar() throws SQLException {
-        String url = "jdbc:mysql://localhost:3306/InfinityComics";
-        String user = getUserPassword()[0];
-        String pass = getUserPassword()[1];
+        String url = "jdbc:mysql://localhost:3306/infinitycomic";
+        String user = "root";
+        String pass = "";
         connection = DriverManager.getConnection(url, user, pass);
     }
 

@@ -5,8 +5,12 @@
  */
 package controller;
 
+import DAO.InfinitiComicsDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,13 +36,26 @@ public class conectar extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
+
+            InfinitiComicsDAO dao = new InfinitiComicsDAO();
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet conectar</title>");            
+            out.println("<title>Servlet conectar</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet conectar at " + request.getContextPath() + "</h1>");
+            try {
+
+                dao.conectar();
+                out.println("<h1> CONECTADO</h1>");
+                
+                dao.descoectar();
+                out.println("<h1> DESCONECTADO</h1>");
+            } catch (SQLException ex) {
+                out.println("<h1> NO VA</h1>" + ex.getMessage());
+            }
+
+            
             out.println("</body>");
             out.println("</html>");
         }
