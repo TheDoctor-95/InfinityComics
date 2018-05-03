@@ -12,6 +12,7 @@ import java.util.List;
  * @author daw2m
  */
 public class User {
+    private String nombre;
     private String username;
     private String passwoed;
     private double cash;
@@ -34,6 +35,16 @@ public class User {
         this.following = following;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    
+    
     public String getUsername() {
         return username;
     }

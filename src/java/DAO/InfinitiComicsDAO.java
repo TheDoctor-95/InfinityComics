@@ -5,6 +5,8 @@
  */
 package DAO;
 
+import entities.User;
+import java.sql.PreparedStatement;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,6 +14,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -74,4 +77,34 @@ public class InfinitiComicsDAO {
             return sql;
         }
     }
+    
+    public void insertUser(User u) throws SQLException{
+        
+        String query = "INSERT INTO user VALUES (?,?,?,?,?,?)";
+        PreparedStatement ps = connection.prepareStatement(query);
+        
+        ps.setString(1, u.getNombre());
+        ps.setString(2, u.getUsername());
+        ps.setString(3, u.getPasswoed());
+        ps.setDouble(4, u.getCash());
+        ps.setString(5, u.getCity());
+        ps.setString(6, u.getType());
+        
+        ps.executeUpdate();
+    }
+    
+    public boolean valUser(String username, String password) throws SQLException{
+        String query = "SELECT * FROM user WHERE username=? AND password = ?";
+        PreparedStatement ps = connection.prepareStatement(query);
+        
+        ps.setString(1, username);
+        ps.setString(2, password);
+        
+        ResultSet rs = ps.executeQuery();
+        
+        if(rs.next()) return true;
+        return false;
+            
+    }
+    
 }
