@@ -32,10 +32,11 @@ public class InfinitiComicsDAO {
      *
      * @throws SQLException
      */
-    public void conectar() throws SQLException {
+    public void conectar() throws SQLException, ClassNotFoundException {
         String url = "jdbc:mysql://localhost:3306/infinitycomic";
         String user = "root";
         String pass = "";
+        Class.forName("com.mysql.jdbc.Driver");
         connection = DriverManager.getConnection(url, user, pass);
     }
 
@@ -50,7 +51,7 @@ public class InfinitiComicsDAO {
         }
     }
 
-    public static String[] getUserPassword() {
+    private static String[] getUserPassword() {
 
         String rutaActual = System.getProperty("user.dir") + File.separator + "src" + File.separator + "enunciado" + File.separator + "sql.txt";
         File f = new File(rutaActual);
@@ -115,7 +116,7 @@ public class InfinitiComicsDAO {
         return u;
     }
     
-     public boolean existUser(String username) throws SQLException{
+     private boolean existUser(String username) throws SQLException{
         String query = "SELECT * FROM user WHERE username='"+username+"'";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
