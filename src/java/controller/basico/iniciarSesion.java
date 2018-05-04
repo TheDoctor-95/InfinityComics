@@ -41,8 +41,9 @@ public class iniciarSesion extends HttpServlet {
             String nombre = request.getParameter("username");
             String password = request.getParameter("password");
             dao.conectar();
+            System.out.println("hola");
             
-            if(dao.valUser(nombre, password)){
+            if(dao.val2User(nombre, password)==true){
                 
                 User user = dao.getUser(nombre);
                 request.getSession(true).setAttribute("user", user);

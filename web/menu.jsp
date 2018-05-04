@@ -14,7 +14,7 @@
     </head>
     <body>
         <%
-            User e = (User) session.getAttribute("empleado");
+            User e = (User) session.getAttribute("user");
             if (e != null) {
         %>
         <h1>Hello <%=e.getNombre()%></h1>

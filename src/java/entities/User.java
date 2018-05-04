@@ -16,8 +16,8 @@ public class User {
     private String username;
     private String password;
     private double cash;
-    private String city;
-    private String type;
+    private String ciudad;
+    private String tipo;
     
     private List<Inventory> inventario;
     private List<Coleccion> following;
@@ -27,19 +27,19 @@ public class User {
         this.username = username;
         this.password = password;
         this.cash = cash;
-        this.city = city;
-        this.type = type;
+        this.ciudad = city;
+        this.tipo = type;
     }
 
     public User() {
     }
 
-    public User(String username, String password, double cash, String city, String type, List<Inventory> inventario, List<Coleccion> following) {
+    public User(String username, String password, double cash, String ciudad, String tipo, List<Inventory> inventario, List<Coleccion> following) {
         this.username = username;
         this.password = password;
         this.cash = cash;
-        this.city = city;
-        this.type = type;
+        this.ciudad = ciudad;
+        this.tipo = tipo;
         this.inventario = inventario;
         this.following = following;
     }
@@ -78,20 +78,20 @@ public class User {
         this.cash = cash;
     }
 
-    public String getCity() {
-        return city;
+    public String getCiudad() {
+        return ciudad;
     }
 
-    public void setCity(String city) {
-        this.city = city;
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
     }
 
-    public String getType() {
-        return type;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public List<Inventory> getInventario() {

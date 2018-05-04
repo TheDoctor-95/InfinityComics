@@ -46,7 +46,7 @@ public class registro extends HttpServlet {
             String ciudad = request.getParameter("ciudad");
             String tipo = request.getParameter("tipo");
             
-            User u = new User(nombre, username, pass, 0, tipo, tipo);
+            User u = new User(nombre, username, pass, 0, ciudad, tipo);
             try {
                 dao.conectar();
                 dao.insertUser(u);
