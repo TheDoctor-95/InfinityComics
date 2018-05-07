@@ -92,10 +92,10 @@ public class InfinitiComicsDAO {
         
         ps.setString(1, u.getNombre());
         ps.setString(2, u.getUsername());
-        ps.setString(3, u.getPasswoed());
+        ps.setString(3, u.getPassword());
         ps.setDouble(4, u.getCash());
-        ps.setString(5, u.getCity());
-        ps.setString(6, u.getType());
+        ps.setString(5, u.getCiudad());
+        ps.setString(6, u.getTipo());
         
         ps.executeUpdate();
     }
@@ -104,14 +104,14 @@ public class InfinitiComicsDAO {
         String query = "SELECT * FROM user WHERE username='"+username+"'";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
-        User u= new User();;
+        User u= new User();
         if(rs.next()){
             u.setUsername(rs.getString("username"));
             u.setNombre(rs.getString("nombre"));
-            u.setPasswoed(rs.getString("password"));
+            u.setPassword(rs.getString("password"));
             u.setCash(rs.getDouble("cash"));
-            u.setCity(rs.getString("city"));
-            u.setType(rs.getString("type"));
+            u.setCiudad(rs.getString("ciudad"));
+            u.setTipo(rs.getString("tipo"));
         }
         return u;
     }
@@ -138,6 +138,14 @@ public class InfinitiComicsDAO {
         if(rs.next()) return true;
         return false;
             
+    }
+    public boolean val2User(String username, String password){
+        String query="SELECT * FROM user WHERE username="+username+" AND password = "+password+"";
+        if(query.length()!=0){
+            return true;
+        }else{
+            return false;
+        }
     }
     
 }
