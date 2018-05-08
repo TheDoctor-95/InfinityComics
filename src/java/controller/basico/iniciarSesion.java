@@ -40,18 +40,29 @@ public class iniciarSesion extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             String nombre = request.getParameter("username");
             String password = request.getParameter("password");
-            dao.conectar();
             System.out.println("hola");
-            
-            if(dao.val2User(nombre, password)==true){
-                
-                User user = dao.getUser(nombre);
+
+            boolean conectar = false;
+            try {
+                conectar = dao.valUser(nombre, password);
+            } catch (ClassNotFoundException ex) {
+                request.setAttribute("status", "No se puede dar de alta");
+                request.getRequestDispatcher("/final.jsp").forward(request, response);
+            }
+            if (conectar) {
+
+                User user = new User();
+                try {
+                    user = dao.getUser(nombre);
+                } catch (ClassNotFoundException ex) {
+                    request.setAttribute("status", "No se puede dar de alta");
+                    request.getRequestDispatcher("/final.jsp").forward(request, response);
+                }
                 request.getSession(true).setAttribute("user", user);
-                dao.descoectar();
-                response.sendRedirect(request.getContextPath() + "/menu.jsp");
-                
-            }else{
-                dao.descoectar();
+                request.getRequestDispatcher("/menu.jsp").forward(request, response);
+
+            } else {
+                request.setAttribute("status", "No se puede dar de alta");
                 request.getRequestDispatcher("/final.jsp").forward(request, response);
             }
         }

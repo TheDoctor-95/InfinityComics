@@ -32,7 +32,7 @@ public class InfinitiComicsDAO {
      *
      * @throws SQLException
      */
-    public void conectar() throws SQLException, ClassNotFoundException {
+    private void conectar() throws SQLException, ClassNotFoundException {
         String url = "jdbc:mysql://localhost:3306/infinitycomic";
         String user = "root";
         String pass = "";
@@ -45,7 +45,7 @@ public class InfinitiComicsDAO {
      *
      * @throws SQLException
      */
-    public void descoectar() throws SQLException {
+    private void descoectar() throws SQLException {
         if (connection != null) {
             connection.close();
         }
@@ -81,8 +81,8 @@ public class InfinitiComicsDAO {
         }
     }
     
-    public void insertUser(User u) throws SQLException, InfinityException{
-        
+    public void insertUser(User u) throws SQLException, InfinityException, ClassNotFoundException{
+        this.conectar();
         if(existUser(u.getUsername())){
             throw new InfinityException(0);
         }
@@ -98,9 +98,11 @@ public class InfinitiComicsDAO {
         ps.setString(6, u.getTipo());
         
         ps.executeUpdate();
+        this.descoectar();
     }
     
-    public User getUser(String username) throws SQLException{
+    public User getUser(String username) throws SQLException, ClassNotFoundException{
+        this.conectar();
         String query = "SELECT * FROM user WHERE username='"+username+"'";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
@@ -113,6 +115,8 @@ public class InfinitiComicsDAO {
             u.setCiudad(rs.getString("ciudad"));
             u.setTipo(rs.getString("tipo"));
         }
+        
+        this.descoectar();
         return u;
     }
     
@@ -121,12 +125,15 @@ public class InfinitiComicsDAO {
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
         if(rs.next()){
+            rs.close();
             return true;
         }
+        rs.close();
         return false;
     }
     
-    public boolean valUser(String username, String password) throws SQLException{
+    public boolean valUser(String username, String password) throws SQLException, ClassNotFoundException{
+        this.conectar();
         String query = "SELECT * FROM user WHERE username=? AND password = ?";
         PreparedStatement ps = connection.prepareStatement(query);
         
@@ -134,18 +141,12 @@ public class InfinitiComicsDAO {
         ps.setString(2, password);
         
         ResultSet rs = ps.executeQuery();
+        boolean is =false;
+        if(rs.next()) is = true;
+        rs.close();
+        this.descoectar();
+        return is;
         
-        if(rs.next()) return true;
-        return false;
-            
-    }
-    public boolean val2User(String username, String password){
-        String query="SELECT * FROM user WHERE username="+username+" AND password = "+password+"";
-        if(query.length()!=0){
-            return true;
-        }else{
-            return false;
-        }
     }
     
 }

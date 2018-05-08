@@ -48,15 +48,18 @@ public class registro extends HttpServlet {
             
             User u = new User(nombre, username, pass, 0, ciudad, tipo);
             try {
-                dao.conectar();
+                
+                
                 dao.insertUser(u);
                 request.setAttribute("status", "Usuario dado de alta");
             } catch (InfinityException ex) {
-                
+                request.setAttribute("status", "No se pudo dar de alta el usuario");
             } catch (SQLException ex) {
-                Logger.getLogger(registro.class.getName()).log(Level.SEVERE, null, ex);
+                request.setAttribute("status", "No se pudo dar de alta el usuario");
+            } catch (ClassNotFoundException ex) {
+               request.setAttribute("status", "No se pudo dar de alta el usuario");
             }
-            dao.descoectar();
+            
             request.getRequestDispatcher("/final.jsp").forward(request, response);
             
         }
