@@ -5,7 +5,7 @@
  */
 package DAO;
 
-import entities.User;
+import entities.*;
 import exeption.InfinityException;
 import java.sql.PreparedStatement;
 import java.io.BufferedReader;
@@ -32,7 +32,7 @@ public class InfinitiComicsDAO {
      *
      * @throws SQLException
      */
-    private void conectar() throws SQLException, ClassNotFoundException {
+    public void conectar() throws SQLException, ClassNotFoundException {
         String url = "jdbc:mysql://localhost:3306/infinitycomic";
         String user = "root";
         String pass = "";
@@ -147,6 +147,45 @@ public class InfinitiComicsDAO {
         this.descoectar();
         return is;
         
+    }
+
+    public void desconectar() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    public void insertColeccion(Coleccion c) throws SQLException, InfinityException, ClassNotFoundException{
+        this.conectar();
+        
+        
+        String query = "INSERT INTO user VALUES (null,?,?,?)";
+        PreparedStatement ps = connection.prepareStatement(query);
+        
+        ps.setString(1, c.getName());
+        ps.setString(2, c.getEditorial());
+        ps.setString(3, c.getType());
+        
+        
+        ps.executeUpdate();
+        this.descoectar();
+    }
+    
+    public void insertComic(Comic c) throws SQLException, InfinityException, ClassNotFoundException{
+        this.conectar();
+        
+        
+        String query = "INSERT INTO user VALUES (null,?,?,?,?,?,?)";
+        PreparedStatement ps = connection.prepareStatement(query);
+        
+        ps.setString(1, c.getTitle());
+        ps.setInt(2, c.getNumber());
+        ps.setDouble(3, c.getPrecio());
+        ps.setString(4, c.getUrlImg());
+        ps.setString(5, c.getAutor());
+        ps.setInt(6, c.getColeccion().getId());
+        
+        
+        ps.executeUpdate();
+        this.descoectar();
     }
     
 }

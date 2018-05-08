@@ -49,7 +49,7 @@ public class conectar extends HttpServlet {
                 dao.conectar();
                 out.println("<h1> CONECTADO</h1>");
                 
-                dao.descoectar();
+                dao.desconectar();
                 out.println("<h1> DESCONECTADO</h1>");
             } catch (SQLException | ClassNotFoundException ex) {
                 out.println("<h1> NO VA</h1>" + ex.getMessage());
