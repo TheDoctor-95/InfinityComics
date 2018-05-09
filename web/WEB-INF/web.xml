@@ -12,6 +12,10 @@
         <servlet-name>iniciarSesion</servlet-name>
         <servlet-class>controller.basico.iniciarSesion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>startSQL</servlet-name>
+        <servlet-class>controller.basico.startSQL</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>conectar</servlet-name>
         <url-pattern>/conectar</url-pattern>
@@ -23,6 +27,10 @@
     <servlet-mapping>
         <servlet-name>iniciarSesion</servlet-name>
         <url-pattern>/iniciarSesion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>startSQL</servlet-name>
+        <url-pattern>/startSQL</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
