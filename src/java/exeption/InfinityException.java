@@ -30,7 +30,7 @@ public class InfinityException extends Exception {
                 return "El comic no existe";
             //ERRORES COLECCION
             case 20:
-                return "";
+                return "La colleccion ja existe";
             //ERRORES INVENTARIO
             case 30:
                 return "";

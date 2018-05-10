@@ -44,7 +44,7 @@
                 <input value="Añadir comic" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
         </form>
-        <form method="POST" action="iniciarSesion">
+        <form method="POST" action="./admin/addCollection.html">
             <div class="form-group">
                 <input value="Añadir coleccion" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>

@@ -16,6 +16,10 @@
         <servlet-name>startSQL</servlet-name>
         <servlet-class>controller.basico.startSQL</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>addCollection</servlet-name>
+        <servlet-class>controller.admin.addCollection</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>conectar</servlet-name>
         <url-pattern>/conectar</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>startSQL</servlet-name>
         <url-pattern>/startSQL</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addCollection</servlet-name>
+        <url-pattern>/addCollection</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

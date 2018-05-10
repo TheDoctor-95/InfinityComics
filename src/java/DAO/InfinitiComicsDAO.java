@@ -121,9 +121,10 @@ public class InfinitiComicsDAO {
 
     public void insertColeccion(Coleccion c) throws SQLException, InfinityException, ClassNotFoundException{
         this.conectar();
-        
-        
-        String query = "INSERT INTO user VALUES (null,?,?,?)";
+        if(existeColeccion(c)){
+            throw new InfinityException(20);
+        }
+        String query = "INSERT INTO coleccion VALUES (null,?,?,?)";
         PreparedStatement ps = connection.prepareStatement(query);
         
         ps.setString(1, c.getName());
@@ -179,7 +180,7 @@ public class InfinitiComicsDAO {
     }
 
     public boolean existeColeccion(Coleccion c) throws SQLException {
-        String query = "SELECT * FROM coleccion WHERE id='" + c.getId() + "'";
+        String query = "SELECT * FROM coleccion WHERE nombre='" + c.getName() + "'";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
         if (rs.next()) {

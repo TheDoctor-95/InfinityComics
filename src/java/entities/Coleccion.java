@@ -16,17 +16,20 @@ public class Coleccion {
     private String name;
     private String editorial;
     private String type;
-    private List<Comic> comics;
-
     public Coleccion() {
     }
 
-    public Coleccion(int id, String name, String editorial, String type, List<Comic> comics) {
+    public Coleccion(String name, String editorial, String type) {
+        this.name = name;
+        this.editorial = editorial;
+        this.type = type;
+    }
+    
+    public Coleccion(int id, String name, String editorial, String type) {
         this.id = id;
         this.name = name;
         this.editorial = editorial;
         this.type = type;
-        this.comics = comics;
     }
 
     public int getId() {
@@ -60,15 +63,5 @@ public class Coleccion {
     public void setType(String type) {
         this.type = type;
     }
-
-    public List<Comic> getComics() {
-        return comics;
-    }
-
-    public void setComics(List<Comic> comics) {
-        this.comics = comics;
-    }
-    
-    
-    
+ 
 }
