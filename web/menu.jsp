@@ -35,7 +35,10 @@
             </div>
         </form>
 
+            
         <%} else if (e.getTipo().equals("admin")) {%>
+        
+        
         <form method="POST" action="iniciarSesion">
             <div class="form-group">
                 <input value="Añadir comic" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
@@ -46,7 +49,21 @@
                 <input value="Añadir coleccion" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
         </form>
+        <form method="POST" action="iniciarSesion">
+            <div class="form-group">
+                <input value="Borrar comic" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
+            </div>
+        </form>
+        <form method="POST" action="iniciarSesion">
+            <div class="form-group">
+                <input value="Borrar coleccion" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
+            </div>
+        </form>
+        
+        
         <%} else {%>
+        
+        
         <form method="POST" action="iniciarSesion">
             <div class="form-group">
                 <input value="Comprar comic" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
@@ -57,6 +74,31 @@
                 <input value="Seguir coleccion" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
         </form>
+        <form method="POST" action="iniciarSesion">
+            <div class="form-group">
+                <input value="Añadir dinero" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
+            </div>
+        </form>
+        <form method="POST" action="iniciarSesion">
+            <div class="form-group">
+                <input value="Modificar perfil" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
+            </div>
+        </form>
+        <form method="POST" action="iniciarSesion">
+            <div class="form-group">
+                <input value="Comics de una tienda" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
+            </div>
+        </form>
+        <form method="POST" action="iniciarSesion">
+            <div class="form-group">
+                <input value="Tiendas de una ciudad" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
+            </div>
+        </form><form method="POST" action="iniciarSesion">
+            <div class="form-group">
+                <input value="Next comics" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
+            </div>
+        </form>
+        
         <%}%>
 
         <%} else {
