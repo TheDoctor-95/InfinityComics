@@ -40,18 +40,22 @@ public class startSQL extends HttpServlet {
         File f = new File(request.getContextPath()+File.separator+"sql.txt");
         try {
             
+            //PRETA AL LLEGAR AQUI
             FileWriter fw = new FileWriter(f);
             BufferedWriter bw = new BufferedWriter(fw);
             //creamos el printWriter para poder inprimir en un archivo
             PrintWriter outFile = new PrintWriter(bw);
             //reccoremos el array de prendas
             outFile.print(request.getAttribute("username"));
+            System.out.print(request.getAttribute("username"));
             outFile.print(request.getAttribute("password"));
+            System.out.print(request.getAttribute("password"));
             //cerramos el PrintWritter
-            out.close();
+            outFile.close();
 
         } catch (IOException ex) {
-            
+            request.setAttribute("status", "No se puede guardar la info del SQL");
+                request.getRequestDispatcher("/final.jsp").forward(request, response);
         }
         
         request.getRequestDispatcher("/index.jsp").forward(request, response);

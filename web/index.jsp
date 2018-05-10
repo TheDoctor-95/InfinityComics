@@ -26,7 +26,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
     <body class="container">
-
+        <h1 style="text-align: center;">INFINITY COMICS</h2>
         <%
             try {
 
@@ -50,7 +50,7 @@
 
         %>
 
-        <h1 style="text-align: center;">INFINITY COMICS</h2>
+       
         <div class="panel-group" id="accordion">
             <div class="panel panel-primary">
                 <div class="panel-heading">

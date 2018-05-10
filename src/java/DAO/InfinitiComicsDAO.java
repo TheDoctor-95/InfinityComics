@@ -5,14 +5,9 @@
  */
 package DAO;
 
-import entities.User;
+import entities.*;
 import exeption.InfinityException;
 import java.sql.PreparedStatement;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -34,7 +29,7 @@ public class InfinitiComicsDAO {
      *
      * @throws SQLException
      */
-    private void conectar() throws SQLException, ClassNotFoundException {
+    public void conectar() throws SQLException, ClassNotFoundException {
         String url = "jdbc:mysql://localhost:3306/infinitycomic";
         Class.forName("com.mysql.jdbc.Driver");
         connection = DriverManager.getConnection(url, user, pass);
@@ -45,7 +40,7 @@ public class InfinitiComicsDAO {
      *
      * @throws SQLException
      */
-    private void descoectar() throws SQLException {
+    private void desconectar() throws SQLException {
         if (connection != null) {
             connection.close();
         }
@@ -70,7 +65,7 @@ public class InfinitiComicsDAO {
         ps.setString(6, u.getTipo());
 
         ps.executeUpdate();
-        this.descoectar();
+        this.desconectar();
     }
 
     public User getUser(String username) throws SQLException, ClassNotFoundException {
@@ -88,7 +83,7 @@ public class InfinitiComicsDAO {
             u.setTipo(rs.getString("tipo"));
         }
 
-        this.descoectar();
+        this.desconectar();
         return u;
     }
 
@@ -118,9 +113,44 @@ public class InfinitiComicsDAO {
             is = true;
         }
         rs.close();
-        this.descoectar();
+        this.desconectar();
         return is;
 
     }
 
+    public void insertColeccion(Coleccion c) throws SQLException, InfinityException, ClassNotFoundException{
+        this.conectar();
+        
+        
+        String query = "INSERT INTO user VALUES (null,?,?,?)";
+        PreparedStatement ps = connection.prepareStatement(query);
+        
+        ps.setString(1, c.getName());
+        ps.setString(2, c.getEditorial());
+        ps.setString(3, c.getType());
+        
+        
+        ps.executeUpdate();
+        this.desconectar();
+    }
+    
+    public void insertComic(Comic c) throws SQLException, InfinityException, ClassNotFoundException{
+        this.conectar();
+        
+        
+        String query = "INSERT INTO user VALUES (null,?,?,?,?,?,?)";
+        PreparedStatement ps = connection.prepareStatement(query);
+        
+        ps.setString(1, c.getTitle());
+        ps.setInt(2, c.getNumber());
+        ps.setDouble(3, c.getPrecio());
+        ps.setString(4, c.getUrlImg());
+        ps.setString(5, c.getAutor());
+        ps.setInt(6, c.getColeccion().getId());
+        
+        
+        ps.executeUpdate();
+        this.desconectar();
+    }
+    
 }

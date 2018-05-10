@@ -12,21 +12,30 @@ package entities;
 public class Comic {
     private int id;
     private String title;
-    private int numbre;
+    private int number;
     private double precio;
     private String urlImg;
     private String Autor;
-    
+    private Coleccion coleccion;
     public Comic() {
     }
 
-    public Comic(int id, String title, int numbre, double precio, String urlImg, String Autor, Coleccion coleccion) {
+    public Comic(int id, String title, int number, double precio, String urlImg, String Autor, Coleccion coleccion) {
         this.id = id;
         this.title = title;
-        this.numbre = numbre;
+        this.number = number;
         this.precio = precio;
         this.urlImg = urlImg;
         this.Autor = Autor;
+        this.coleccion = coleccion;
+    }
+
+    public Coleccion getColeccion() {
+        return coleccion;
+    }
+
+    public void setColeccion(Coleccion coleccion) {
+        this.coleccion = coleccion;
     }
 
     public int getId() {
@@ -45,12 +54,12 @@ public class Comic {
         this.title = title;
     }
 
-    public int getNumbre() {
-        return numbre;
+    public int getNumber() {
+        return number;
     }
 
-    public void setNumbre(int numbre) {
-        this.numbre = numbre;
+    public void setNumber(int numbre) {
+        this.number = numbre;
     }
 
     public double getPrecio() {
