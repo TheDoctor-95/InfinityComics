@@ -28,8 +28,8 @@
     <body class="container">
         <h1 style="text-align: center;">INFINITY COMICS</h2>
         <%
-            try {
-
+            //try {
+/*
                 File f = new File(request.getContextPath() + File.separator + "sql.txt");
                 String[] sql = new String[2];
 
@@ -46,7 +46,7 @@
                     line = br.readLine();
                 }
                 
-            
+            */
 
         %>
 
@@ -111,12 +111,14 @@
                 </div>
             </div>
         </div>
-        <%            }
-            catch (FileNotFoundException ex
+        
+        <!--
+        <%   /*         }
+              catch (FileNotFoundException ex
 
             
             
-        ) {
+        ) {*/
         %>
         <div class="panel-group" id="accordion">
             <div class="panel panel-primary">
@@ -143,8 +145,9 @@
             </div>
         </div>
         <%
-            }
+           /* } */
         %>
+        -->
 
 </body>
 </html>

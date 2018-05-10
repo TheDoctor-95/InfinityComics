@@ -13,6 +13,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  *
@@ -29,6 +30,8 @@ public class InfinitiComicsDAO {
      *
      * @throws SQLException
      */
+    /*============================================Conectar/Desconectar============================================*/
+
     public void conectar() throws SQLException, ClassNotFoundException {
         String url = "jdbc:mysql://localhost:3306/infinitycomic";
         Class.forName("com.mysql.jdbc.Driver");
@@ -40,13 +43,11 @@ public class InfinitiComicsDAO {
      *
      * @throws SQLException
      */
-    private void desconectar() throws SQLException {
+    public void desconectar() throws SQLException {
         if (connection != null) {
             connection.close();
         }
     }
-
-    
 
     public void insertUser(User u) throws SQLException, InfinityException, ClassNotFoundException {
         this.conectar();
@@ -152,5 +153,138 @@ public class InfinitiComicsDAO {
         ps.executeUpdate();
         this.desconectar();
     }
+
+    public void insertarCash(User u, Integer dinero) throws SQLException, ClassNotFoundException {
+        this.conectar();
+        String query = "UPDATE user SET cash = cash+" + dinero + " where username ='" + u.getUsername() + "'";
+        Statement st = connection.createStatement();
+        st.executeUpdate(query);
+
+        this.desconectar();
+    }
+
+    /*============================================Coleccion============================================*/
+    public void BorrarComic(Coleccion c) throws SQLException, ClassNotFoundException, InfinityException {
+        this.conectar();
+        if (existeColeccion(c)) {
+            String query = "DELETE FROM coleccion WHERE id='" + c.getId() + "'";
+            Statement st = connection.createStatement();
+            st.executeUpdate(query);
+        } else {
+            this.desconectar();
+            throw new InfinityException(11);
+        }
+
+        this.desconectar();
+    }
+
+    public boolean existeColeccion(Coleccion c) throws SQLException {
+        String query = "SELECT * FROM coleccion WHERE id='" + c.getId() + "'";
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        if (rs.next()) {
+            rs.close();
+            return true;
+        }
+        rs.close();
+        return false;
+    }
+
+    /*============================================Comic============================================*/
+    public void BorrarComic(Comic c) throws SQLException, ClassNotFoundException, InfinityException {
+        this.conectar();
+        if (existeComic(c)) {
+            String query = "DELETE FROM comic WHERE id='" + c.getId() + "'";
+            Statement st = connection.createStatement();
+            st.executeUpdate(query);
+        } else {
+            this.desconectar();
+            throw new InfinityException(11);
+        }
+
+        this.desconectar();
+
+    }
+
+    public boolean existeComic(Comic c) throws SQLException {
+        String query = "SELECT * FROM comic WHERE id='" + c.getId() + "'";
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        if (rs.next()) {
+            rs.close();
+            return true;
+        }
+        rs.close();
+        return false;
+    }
+
+    /*============================================Secundarias============================================*/
+    public void InsertarComicInventario(User u, Comic c, Integer cantidad) throws SQLException, ClassNotFoundException {
+        this.conectar();
+
+        String query = "INSERT INTO inventario (null,?,?,?)";
+        PreparedStatement ps = connection.prepareStatement(query);
+
+        ps.setInt(1, c.getId());
+        ps.setString(2, u.getUsername());
+        ps.setInt(3, cantidad);
+
+        ps.executeUpdate();
+        this.desconectar();
+
+    }
+
+    public boolean tenerComic(Comic c, User u) throws SQLException {
+        String query = "SELECT * FROM inventario WHERE id_comic='" + c.getId() + "' and username = '" + u.getUsername() + "'";
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        if (rs.next()) {
+            rs.close();
+            return true;
+        }
+        rs.close();
+        return false;
+    }
+
+    public ArrayList<User> tiendasByCiudad(String ciudad) throws SQLException {
+        ArrayList<User> lista = new ArrayList<>();
+        String query = "SELECT * FROM user WHERE ciudad='" + ciudad + "' and tipo='tienda'";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ResultSet rs = ps.executeQuery(query);
+        if (rs.next()) {
+            while (rs.next()) {
+                User u = new User();
+                u.setUsername(rs.getString("username"));
+                u.setPassword(rs.getString("password"));
+                u.setCash(rs.getDouble("cash"));
+                u.setCiudad(rs.getString("ciudad"));
+                u.setTipo(rs.getString("tipo"));
+                lista.add(u);
+            }
+            return lista;
+        }
+        return lista;
+    }
+    public ArrayList<Comic> comicsByTienda(String username) throws SQLException {
+        ArrayList<Comic> lista = new ArrayList<>();
+        String query = "SELECT * FROM inventario WHERE username='" + username + "'";
+        PreparedStatement ps = connection.prepareStatement(query);
+        ResultSet rs = ps.executeQuery(query);
+        if (rs.next()) {
+            while (rs.next()) {
+                Comic c = new Comic();
+                c.setId(rs.getInt("id"));
+                c.setTitle(rs.getString("titulo"));
+                c.setPrecio(rs.getInt("precio"));
+                c.setUrlImg(rs.getString("urlImg"));
+                c.setAutor(rs.getString("Autor"));
+                c.setColeccion((Coleccion) rs.getObject("id_coleccion"));
+                lista.add(c);
+            }
+            return lista;
+        }
+        return lista;
+    }
+    
     
 }
