@@ -103,7 +103,7 @@ public class InfinitiComicsDAO {
         ps.executeUpdate();
         this.desconectar();
     }
-    
+
     public User getUser(String username) throws SQLException, ClassNotFoundException {
         this.conectar();
         String query = "SELECT * FROM user WHERE username='" + username + "'";
@@ -163,11 +163,20 @@ public class InfinitiComicsDAO {
         this.desconectar();
     }
 
+    public void updateProfile(User u) throws SQLException, ClassNotFoundException {
+        this.conectar();
+        String query = "UPDATE user SET nombre = " + u.getNombre() + ", password ='" + u.getPassword() + "', ciudad ='" + u.getCiudad() + "', tipo ='" + u.getTipo() + "'";
+        Statement st = connection.createStatement();
+        st.executeUpdate(query);
+
+        this.desconectar();
+    }
+
     /*============================================Coleccion============================================*/
     public void insertColeccion(Coleccion c) throws SQLException, InfinityException, ClassNotFoundException {
         this.conectar();
 
-        String query = "INSERT INTO user VALUES (null,?,?,?)";
+        String query = "INSERT INTO coleccion VALUES (null,?,?,?)";
         PreparedStatement ps = connection.prepareStatement(query);
 
         ps.setString(1, c.getName());
@@ -242,7 +251,7 @@ public class InfinitiComicsDAO {
     }
 
     public boolean existeComic(Comic c) throws SQLException {
-        String query = "SELECT * FROM comic WHERE id='" + c.getId() + "'";
+        String query = "SELECT * FROM comic WHERE number='" + c.getNumber() + "' and id_coleccion= '" + c.getColeccion().getId() + "'";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
         if (rs.next()) {
@@ -300,6 +309,7 @@ public class InfinitiComicsDAO {
         }
         return lista;
     }
+
     public ArrayList<Comic> comicsByTienda(String username) throws SQLException {
         ArrayList<Comic> lista = new ArrayList<>();
         String query = "SELECT * FROM inventario WHERE username='" + username + "'";
@@ -320,6 +330,52 @@ public class InfinitiComicsDAO {
         }
         return lista;
     }
-    
-    
+
+    public void comprarComic(Comic c, User user, User tienda, Integer cantidad) throws SQLException, ClassNotFoundException, InfinityException {
+        this.conectar();
+        connection.setAutoCommit(false);
+        try {
+            int totalprecio = (int) (user.getCash() - c.getPrecio());
+            if (totalprecio >= 0) {
+                if (tenerComic(c, user)) {
+                    //Tiene el comic
+                    String query1 = "UPDATE user SET cash = cash - " + c.getPrecio() + " where username = '" + user.getUsername() + "'";
+                    String query2 = "UPDATE user SET cash = cash + " + c.getPrecio() + " where username = '" + tienda.getUsername() + "'";
+                    String query3 = "UPDATE Inventario SET cantidad = - " + c.getPrecio() + " where username = '" + tienda.getUsername() + "' and id_comic= '" + c.getId() + "'";
+                    String query4 = "UPDATE Inventario SET cantidad = + " + c.getPrecio() + " where username = '" + user.getUsername() + "' and id_comic= '" + c.getId() + "'";
+
+                    Statement st = connection.createStatement();
+                    st.executeUpdate(query1);
+                    st.executeUpdate(query2);
+                    st.executeUpdate(query3);
+                    st.executeUpdate(query4);
+                } else {
+                    //no tiene el comic
+                    String query1 = "UPDATE user SET cash = cash - " + c.getPrecio() + " where username = '" + user.getUsername() + "'";
+                    String query2 = "UPDATE user SET cash = cash + " + c.getPrecio() + " where username = '" + tienda.getUsername() + "'";
+                    String query3 = "UPDATE Inventario SET cantidad = - " + c.getPrecio() + " where username = '" + tienda.getUsername() + "' and id_comic= '" + c.getId() + "'";
+                    String query4 = "INSERT INTO Inventario VALUES (null,?,?,?)";
+
+                    Statement st = connection.createStatement();
+                    st.executeUpdate(query1);
+                    st.executeUpdate(query2);
+                    st.executeUpdate(query3);
+                    PreparedStatement ps2 = connection.prepareStatement(query4);
+
+                    ps2.setInt(1, c.getId());
+                    ps2.setString(2, user.getUsername());
+                    ps2.setInt(3, cantidad);
+                    ps2.executeUpdate();
+                }
+            } else {
+                throw new InfinityException(0);
+            }
+
+        } finally {
+            connection.setAutoCommit(true);
+            this.desconectar();
+        }
+
+    }
+
 }

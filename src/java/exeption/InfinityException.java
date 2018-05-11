@@ -23,10 +23,12 @@ public class InfinityException extends Exception {
             //Errores USER
             case 0:
                 return "El usuario ya existe";
+            case 1:
+                return "El usuairo no tiene suficiente dinero";
             //ERRORES COMICS
             case 10:
                 return "El comic ya existe";
-                case 11:
+            case 11:
                 return "El comic no existe";
             //ERRORES COLECCION
             case 20:
