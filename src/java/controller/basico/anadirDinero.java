@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 public class anadirDinero extends HttpServlet {
 
     InfinitiComicsDAO dao = new InfinitiComicsDAO();
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -38,20 +38,22 @@ public class anadirDinero extends HttpServlet {
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            
-             System.out.println("añadirDinero");
+
+            System.out.println("añadirDinero");
             User u = (User) request.getSession().getAttribute("user");
             int dinero = Integer.parseInt(request.getParameter("dinero"));
-           // if (u.getTipo().equals("usuario")) {
-             //   if (dinero < 0) {
+            if (u.getTipo().equals("usuario")) {
+                System.out.println("1");
+                if (dinero > 0) {
+                    System.out.println("2");
                     dao.insertarCash(u, dinero);
                     request.getSession(true).setAttribute("user", u);
                     request.getRequestDispatcher("/menu.jsp").forward(request, response);
-           //     }
-            //}
-           // request.setAttribute("status", "No se puede añadir");
-           // request.getRequestDispatcher("/final.jsp").forward(request, response);
-        
+                }
+            }
+            request.setAttribute("status", "No se puede añadir");
+            request.getRequestDispatcher("/final.jsp").forward(request, response);
+
         }
     }
 
