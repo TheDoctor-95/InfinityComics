@@ -54,7 +54,7 @@
                 <input value="Borrar comic" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
         </form>
-        <form method="POST" action="loadDeleteComics">
+        <form method="POST" action="loadDeleteColeccion">
             <div class="form-group">
                 <input value="Borrar coleccion" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>

@@ -5,8 +5,12 @@
  */
 package controller.admin;
 
+import DAO.InfinitiComicsDAO;
+import entities.Coleccion;
+import exeption.InfinityException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -32,15 +36,19 @@ public class deleteColeccion extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet deleteColeccion</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet deleteColeccion at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+           try {
+                InfinitiComicsDAO dao = new InfinitiComicsDAO();
+                System.out.println(request.getParameter("idDelete"));
+                Coleccion c = new Coleccion(Integer.parseInt(request.getParameter("idDelete")));
+                System.out.println(c);
+                dao.borrarColection(c);
+                request.setAttribute("status", "Coleccion borrado");
+                request.getRequestDispatcher("/final.jsp").forward(request, response);
+                
+            } catch (SQLException | ClassNotFoundException | InfinityException ex) {
+                request.setAttribute("status", ex.getMessage());
+                request.getRequestDispatcher("/final.jsp").forward(request, response);
+            }
         }
     }
 

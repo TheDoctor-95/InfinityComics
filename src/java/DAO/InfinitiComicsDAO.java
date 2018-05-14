@@ -24,15 +24,15 @@ public class InfinitiComicsDAO {
 
     public static Connection connection;
 
-    public static String user="root";
-    public static String pass="";
+    public static String user = "root";
+    public static String pass = "";
+
     /**
      * Funcion para conectar a la bbdd
      *
      * @throws SQLException
      */
     /*============================================Conectar/Desconectar============================================*/
-
     public void conectar() throws SQLException, ClassNotFoundException {
         String url = "jdbc:mysql://localhost:3306/infinitycomic";
         Class.forName("com.mysql.jdbc.Driver");
@@ -120,37 +120,19 @@ public class InfinitiComicsDAO {
 
     }
 
-    public void insertColeccion(Coleccion c) throws SQLException, InfinityException, ClassNotFoundException{
+    public void insertComic(Comic c) throws SQLException, InfinityException, ClassNotFoundException {
         this.conectar();
-        if(existeColeccion(c)){
-            throw new InfinityException(20);
-        }
-        String query = "INSERT INTO coleccion VALUES (null,?,?,?)";
-        PreparedStatement ps = connection.prepareStatement(query);
-        
-        ps.setString(1, c.getName());
-        ps.setString(2, c.getEditorial());
-        ps.setString(3, c.getType());
-        
-        
-        ps.executeUpdate();
-        this.desconectar();
-    }
-    
-    public void insertComic(Comic c) throws SQLException, InfinityException, ClassNotFoundException{
-        this.conectar();
-        
-        
+
         String query = "INSERT INTO comic VALUES (null,?,?,?,?,?,?)";
         PreparedStatement ps = connection.prepareStatement(query);
-        
+
         ps.setString(1, c.getTitle());
         ps.setInt(2, c.getNumber());
         ps.setDouble(3, c.getPrecio());
         ps.setString(4, c.getUrlImg());
         ps.setString(5, c.getAutor());
         ps.setInt(6, c.getColeccion().getId());
-        
+
         ps.executeUpdate();
         this.desconectar();
     }
@@ -164,19 +146,38 @@ public class InfinitiComicsDAO {
         this.desconectar();
     }
 
-    /*============================================Coleccion============================================*/
-    public void BorrarColection(Coleccion c) throws SQLException, ClassNotFoundException, InfinityException {
+    public void updateProfile(User u) throws SQLException, ClassNotFoundException {
         this.conectar();
-        if (existeColeccion(c)) {
-            String query = "DELETE FROM coleccion WHERE id='" + c.getId() + "'";
-            Statement st = connection.createStatement();
-            st.executeUpdate(query);
-        } else {
-            this.desconectar();
-            throw new InfinityException(11);
-        }
+        String query = "UPDATE user SET nombre = " + u.getNombre() + ", password ='" + u.getPassword() + "', ciudad ='" + u.getCiudad() + "', tipo ='" + u.getTipo() + "'";
+        Statement st = connection.createStatement();
+        st.executeUpdate(query);
 
         this.desconectar();
+    }
+
+    /*============================================Coleccion============================================*/
+    public void insertColeccion(Coleccion c) throws SQLException, InfinityException, ClassNotFoundException {
+        this.conectar();
+
+        String query = "INSERT INTO coleccion VALUES (null,?,?,?)";
+        PreparedStatement ps = connection.prepareStatement(query);
+
+        ps.setString(1, c.getName());
+        ps.setString(2, c.getEditorial());
+        ps.setString(3, c.getType());
+
+        ps.executeUpdate();
+        this.desconectar();
+    }
+
+    public void borrarColection(Coleccion c) throws SQLException, ClassNotFoundException, InfinityException {
+        this.conectar();
+        String query = "DELETE FROM coleccion WHERE id='" + c.getId() + "'";
+        Statement st = connection.createStatement();
+        st.executeUpdate(query);
+
+        this.desconectar();
+
     }
 
     public boolean existeColeccion(Coleccion c) throws SQLException {
@@ -190,72 +191,67 @@ public class InfinitiComicsDAO {
         rs.close();
         return false;
     }
-    
+
     public List<Coleccion> getAllColeccions() throws SQLException, ClassNotFoundException {
-        
+
         this.conectar();
-        
+
         String query = "SELECT * FROM coleccion";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
         List<Coleccion> list = new ArrayList<>();
-        
-        while (rs.next()){
-            
+
+        while (rs.next()) {
+
             Coleccion c = new Coleccion();
             c.setId(rs.getInt("id"));
             c.setName(rs.getString("nombre"));
             c.setType(rs.getString("type"));
             c.setEditorial(rs.getString("editorial"));
             list.add(c);
-            
+
         }
-        
+
         rs.close();
         this.desconectar();
         return list;
-        
+
     }
-    
+
     private Coleccion getColeccionById(int id) throws SQLException {
-        
-        String query = "SELECT * FROM coleccion WHERE id='"+id+"'";
+
+        String query = "SELECT * FROM coleccion WHERE id='" + id + "'";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
         Coleccion c = new Coleccion();
-        
-        if (rs.next()){
-            
+
+        if (rs.next()) {
+
             c.setId(rs.getInt("id"));
             c.setName(rs.getString("nombre"));
             c.setType(rs.getString("type"));
             c.setEditorial(rs.getString("editorial"));
-            
+
         }
-        
+
         rs.close();
         return c;
-        
+
     }
 
     /*============================================Comic============================================*/
     public void BorrarComic(Comic c) throws SQLException, ClassNotFoundException, InfinityException {
         this.conectar();
-        if (existeComic(c)) {
-            String query = "DELETE FROM comic WHERE id='" + c.getId() + "'";
-            Statement st = connection.createStatement();
-            st.executeUpdate(query);
-        } else {
-            this.desconectar();
-            throw new InfinityException(11);
-        }
+        String query = "DELETE FROM comic WHERE id='" + c.getId() + "'";
+        Statement st = connection.createStatement();
+        st.executeUpdate(query);
 
         this.desconectar();
 
     }
 
     public boolean existeComic(Comic c) throws SQLException {
-        String query = "SELECT * FROM comic WHERE id='" + c.getId() + "'";
+        String query = "SELECT * FROM comic WHERE number='" + c.getNumber() + "' and id_coleccion= '" + c.getColeccion().getId() + "'";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
         if (rs.next()) {
@@ -265,15 +261,15 @@ public class InfinitiComicsDAO {
         rs.close();
         return false;
     }
-    
+
     public List<Comic> getAllComics() throws SQLException, ClassNotFoundException {
         this.conectar();
-        
+
         String query = "SELECT * FROM comic";
-        Statement st=connection.createStatement();
+        Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
         List<Comic> comics = new ArrayList<>();
-        
+
         while (rs.next()) {
             Comic c = new Comic();
             c.setId(rs.getInt("id"));
@@ -283,14 +279,14 @@ public class InfinitiComicsDAO {
             c.setUrlImg(rs.getString("urlImg"));
             c.setAutor(rs.getString("Autor"));
             c.setColeccion(getColeccionById(rs.getInt("id_coleccion")));
-            
+
             comics.add(c);
         }
-        
+
         rs.close();
         this.desconectar();
         return comics;
-        
+
     }
 
     /*============================================Secundarias============================================*/
@@ -340,6 +336,7 @@ public class InfinitiComicsDAO {
         }
         return lista;
     }
+
     public ArrayList<Comic> comicsByTienda(String username) throws SQLException {
         ArrayList<Comic> lista = new ArrayList<>();
         String query = "SELECT * FROM inventario WHERE username='" + username + "'";
@@ -360,6 +357,52 @@ public class InfinitiComicsDAO {
         }
         return lista;
     }
-    
-    
+
+    public void comprarComic(Comic c, User user, User tienda, Integer cantidad) throws SQLException, ClassNotFoundException, InfinityException {
+        this.conectar();
+        connection.setAutoCommit(false);
+        try {
+            int totalprecio = (int) (user.getCash() - c.getPrecio());
+            if (totalprecio >= 0) {
+                if (tenerComic(c, user)) {
+                    //Tiene el comic
+                    String query1 = "UPDATE user SET cash = cash - " + c.getPrecio() + " where username = '" + user.getUsername() + "'";
+                    String query2 = "UPDATE user SET cash = cash + " + c.getPrecio() + " where username = '" + tienda.getUsername() + "'";
+                    String query3 = "UPDATE Inventario SET cantidad = - " + c.getPrecio() + " where username = '" + tienda.getUsername() + "' and id_comic= '" + c.getId() + "'";
+                    String query4 = "UPDATE Inventario SET cantidad = + " + c.getPrecio() + " where username = '" + user.getUsername() + "' and id_comic= '" + c.getId() + "'";
+
+                    Statement st = connection.createStatement();
+                    st.executeUpdate(query1);
+                    st.executeUpdate(query2);
+                    st.executeUpdate(query3);
+                    st.executeUpdate(query4);
+                } else {
+                    //no tiene el comic
+                    String query1 = "UPDATE user SET cash = cash - " + c.getPrecio() + " where username = '" + user.getUsername() + "'";
+                    String query2 = "UPDATE user SET cash = cash + " + c.getPrecio() + " where username = '" + tienda.getUsername() + "'";
+                    String query3 = "UPDATE Inventario SET cantidad = - " + c.getPrecio() + " where username = '" + tienda.getUsername() + "' and id_comic= '" + c.getId() + "'";
+                    String query4 = "INSERT INTO Inventario VALUES (null,?,?,?)";
+
+                    Statement st = connection.createStatement();
+                    st.executeUpdate(query1);
+                    st.executeUpdate(query2);
+                    st.executeUpdate(query3);
+                    PreparedStatement ps2 = connection.prepareStatement(query4);
+
+                    ps2.setInt(1, c.getId());
+                    ps2.setString(2, user.getUsername());
+                    ps2.setInt(3, cantidad);
+                    ps2.executeUpdate();
+                }
+            } else {
+                throw new InfinityException(0);
+            }
+
+        } finally {
+            connection.setAutoCommit(true);
+            this.desconectar();
+        }
+
+    }
+
 }

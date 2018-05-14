@@ -45,7 +45,7 @@
                         <form action="./deleteComics" method="POST">
                             <input type="hidden" name="idDelete" value="<%=c.getId() %>" />
                             <img src="<%=c.getUrlImg()%>" height="100px"/>
-                            <%=c.getColeccion().getName() %> <%=c.getNumber() %> <%=c.getTitle() %><input class="btn btn-block" type="submit"  value="Borrar" />
+                            <%=c.getColeccion().getName() %> <%=c.getNumber() %> <%=c.getTitle() %><input class="btn btn-block btn-danger" type="submit"  value="Borrar" />
                         </form>
                     </div>
                     <%
