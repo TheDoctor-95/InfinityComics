@@ -18,19 +18,20 @@
             if (e != null) {
         %>
         <h1>Hello <%=e.getNombre()%></h1>
-        
 
-        <form method="POST" action="añadirDinero">
-            <div class="form-group">
-                <label for="username">Cuanto dinero quieres añadir?</label>
-                <input id="añadirDinero" class="form-control" type="number" name="añadirDinero"/>
+        <div>
+            <form method="POST" action="anadirDinero">
+                <div class="form-group">
+                    <label for="dinero">Cuanto dinero quieres añadir?</label>
+                    <input id="dinero" class="form-control" type="number" name="dinero"/>
+                </div>
                 <input type="submit" value="Añadir" class="btn btn-primary btn-block"/>
-            </div>
-        </form>
+            </form>
+        </div>
 
-            
-        
-       <% } else {
+
+
+        <% } else {
         %><h1>esto no furula</h1>
         <%}%>
     </body>

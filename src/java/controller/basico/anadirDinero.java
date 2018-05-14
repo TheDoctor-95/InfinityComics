@@ -6,9 +6,7 @@
 package controller.basico;
 
 import DAO.InfinitiComicsDAO;
-import static DAO.InfinitiComicsDAO.user;
 import entities.User;
-import exeption.InfinityException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -23,10 +21,10 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author pablourbano
  */
-public class añadirDinero extends HttpServlet {
+public class anadirDinero extends HttpServlet {
 
     InfinitiComicsDAO dao = new InfinitiComicsDAO();
-
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -39,8 +37,22 @@ public class añadirDinero extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            
+             System.out.println("añadirDinero");
+            User u = (User) request.getSession().getAttribute("user");
+            int dinero = Integer.parseInt(request.getParameter("dinero"));
+           // if (u.getTipo().equals("usuario")) {
+             //   if (dinero < 0) {
+                    dao.insertarCash(u, dinero);
+                    request.getSession(true).setAttribute("user", u);
+                    request.getRequestDispatcher("/menu.jsp").forward(request, response);
+           //     }
+            //}
+           // request.setAttribute("status", "No se puede añadir");
+           // request.getRequestDispatcher("/final.jsp").forward(request, response);
         
-       
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -58,9 +70,9 @@ public class añadirDinero extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(añadirDinero.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(anadirDinero.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(añadirDinero.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(anadirDinero.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -78,9 +90,9 @@ public class añadirDinero extends HttpServlet {
         try {
             processRequest(request, response);
         } catch (SQLException ex) {
-            Logger.getLogger(añadirDinero.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(anadirDinero.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(añadirDinero.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(anadirDinero.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -93,7 +105,5 @@ public class añadirDinero extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    
 
 }

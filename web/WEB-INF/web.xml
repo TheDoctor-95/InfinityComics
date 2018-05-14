@@ -44,6 +44,10 @@
         <servlet-name>deleteColeccion</servlet-name>
         <servlet-class>controller.admin.deleteColeccion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>anadirDinero</servlet-name>
+        <servlet-class>controller.basico.anadirDinero</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>conectar</servlet-name>
         <url-pattern>/conectar</url-pattern>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>deleteColeccion</servlet-name>
         <url-pattern>/deleteColeccion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>anadirDinero</servlet-name>
+        <url-pattern>/anadirDinero</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
