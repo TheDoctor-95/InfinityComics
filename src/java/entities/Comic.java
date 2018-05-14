@@ -20,6 +20,10 @@ public class Comic {
     public Comic() {
     }
 
+    public Comic(int id) {
+        this.id = id;
+    }
+    
     public Comic(int id, String title, int number, double precio, String urlImg, String Autor, Coleccion coleccion) {
         this.id = id;
         this.title = title;
@@ -86,4 +90,8 @@ public class Comic {
         this.Autor = Autor;
     }
     
+    @Override
+    public String toString() {
+        return "Comic{" + "id=" + id + ", title=" + title + ", number=" + number + ", precio=" + precio + ", urlImg=" + urlImg + ", Autor=" + Autor + ", coleccion=" + coleccion + '}';
+    }
 }

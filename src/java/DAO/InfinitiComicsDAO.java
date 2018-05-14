@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -140,7 +141,7 @@ public class InfinitiComicsDAO {
         this.conectar();
         
         
-        String query = "INSERT INTO user VALUES (null,?,?,?,?,?,?)";
+        String query = "INSERT INTO comic VALUES (null,?,?,?,?,?,?)";
         PreparedStatement ps = connection.prepareStatement(query);
         
         ps.setString(1, c.getTitle());
@@ -149,7 +150,6 @@ public class InfinitiComicsDAO {
         ps.setString(4, c.getUrlImg());
         ps.setString(5, c.getAutor());
         ps.setInt(6, c.getColeccion().getId());
-        
         
         ps.executeUpdate();
         this.desconectar();
@@ -165,7 +165,7 @@ public class InfinitiComicsDAO {
     }
 
     /*============================================Coleccion============================================*/
-    public void BorrarComic(Coleccion c) throws SQLException, ClassNotFoundException, InfinityException {
+    public void BorrarColection(Coleccion c) throws SQLException, ClassNotFoundException, InfinityException {
         this.conectar();
         if (existeColeccion(c)) {
             String query = "DELETE FROM coleccion WHERE id='" + c.getId() + "'";
@@ -189,6 +189,53 @@ public class InfinitiComicsDAO {
         }
         rs.close();
         return false;
+    }
+    
+    public List<Coleccion> getAllColeccions() throws SQLException, ClassNotFoundException {
+        
+        this.conectar();
+        
+        String query = "SELECT * FROM coleccion";
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        List<Coleccion> list = new ArrayList<>();
+        
+        while (rs.next()){
+            
+            Coleccion c = new Coleccion();
+            c.setId(rs.getInt("id"));
+            c.setName(rs.getString("nombre"));
+            c.setType(rs.getString("type"));
+            c.setEditorial(rs.getString("editorial"));
+            list.add(c);
+            
+        }
+        
+        rs.close();
+        this.desconectar();
+        return list;
+        
+    }
+    
+    private Coleccion getColeccionById(int id) throws SQLException {
+        
+        String query = "SELECT * FROM coleccion WHERE id='"+id+"'";
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        Coleccion c = new Coleccion();
+        
+        if (rs.next()){
+            
+            c.setId(rs.getInt("id"));
+            c.setName(rs.getString("nombre"));
+            c.setType(rs.getString("type"));
+            c.setEditorial(rs.getString("editorial"));
+            
+        }
+        
+        rs.close();
+        return c;
+        
     }
 
     /*============================================Comic============================================*/
@@ -217,6 +264,33 @@ public class InfinitiComicsDAO {
         }
         rs.close();
         return false;
+    }
+    
+    public List<Comic> getAllComics() throws SQLException, ClassNotFoundException {
+        this.conectar();
+        
+        String query = "SELECT * FROM comic";
+        Statement st=connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        List<Comic> comics = new ArrayList<>();
+        
+        while (rs.next()) {
+            Comic c = new Comic();
+            c.setId(rs.getInt("id"));
+            c.setTitle(rs.getString("titulo"));
+            c.setNumber(rs.getInt("number"));
+            c.setPrecio(rs.getDouble("precio"));
+            c.setUrlImg(rs.getString("urlImg"));
+            c.setAutor(rs.getString("Autor"));
+            c.setColeccion(getColeccionById(rs.getInt("id_coleccion")));
+            
+            comics.add(c);
+        }
+        
+        rs.close();
+        this.desconectar();
+        return comics;
+        
     }
 
     /*============================================Secundarias============================================*/

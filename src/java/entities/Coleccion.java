@@ -19,6 +19,10 @@ public class Coleccion {
     public Coleccion() {
     }
 
+    public Coleccion(int id) {
+        this.id = id;
+    }
+    
     public Coleccion(String name, String editorial, String type) {
         this.name = name;
         this.editorial = editorial;

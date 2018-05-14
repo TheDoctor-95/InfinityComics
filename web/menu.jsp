@@ -39,7 +39,7 @@
         <%} else if (e.getTipo().equals("admin")) {%>
         
         
-        <form method="POST" action="addComic">
+        <form method="POST" action="chargeAddComic">
             <div class="form-group">
                 <input value="Añadir comic" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
@@ -49,12 +49,12 @@
                 <input value="Añadir coleccion" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
         </form>
-        <form method="POST" action="iniciarSesion">
+        <form method="POST" action="loadDeleteComics">
             <div class="form-group">
                 <input value="Borrar comic" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
         </form>
-        <form method="POST" action="iniciarSesion">
+        <form method="POST" action="loadDeleteComics">
             <div class="form-group">
                 <input value="Borrar coleccion" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>

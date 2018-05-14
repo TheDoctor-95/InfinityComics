@@ -20,6 +20,30 @@
         <servlet-name>addCollection</servlet-name>
         <servlet-class>controller.admin.addCollection</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>chargeAddComic</servlet-name>
+        <servlet-class>controller.admin.chargeAddComic</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addComic</servlet-name>
+        <servlet-class>controller.admin.addComic</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadDeleteComics</servlet-name>
+        <servlet-class>controller.admin.loadDeleteComics</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deleteComics</servlet-name>
+        <servlet-class>controller.admin.deleteComics</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadDeleteColeccion</servlet-name>
+        <servlet-class>controller.admin.loadDeleteColeccion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deleteColeccion</servlet-name>
+        <servlet-class>controller.admin.deleteColeccion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>conectar</servlet-name>
         <url-pattern>/conectar</url-pattern>
@@ -39,6 +63,30 @@
     <servlet-mapping>
         <servlet-name>addCollection</servlet-name>
         <url-pattern>/addCollection</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>chargeAddComic</servlet-name>
+        <url-pattern>/chargeAddComic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addComic</servlet-name>
+        <url-pattern>/addComic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadDeleteComics</servlet-name>
+        <url-pattern>/loadDeleteComics</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteComics</servlet-name>
+        <url-pattern>/deleteComics</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadDeleteColeccion</servlet-name>
+        <url-pattern>/loadDeleteColeccion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteColeccion</servlet-name>
+        <url-pattern>/deleteColeccion</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
