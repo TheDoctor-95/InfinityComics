@@ -76,6 +76,18 @@
         <servlet-name>loadFollowingColecction</servlet-name>
         <servlet-class>controller.basico.loadFollowingColecction</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>comprarComic</servlet-name>
+        <servlet-class>controller.basico.comprarComic</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>cambiarUsuario</servlet-name>
+        <servlet-class>controller.basico.cambiarUsuario</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadComicsComprados</servlet-name>
+        <servlet-class>controler.shop.loadComicsComprados</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>conectar</servlet-name>
         <url-pattern>/conectar</url-pattern>
@@ -151,6 +163,18 @@
     <servlet-mapping>
         <servlet-name>loadFollowingColecction</servlet-name>
         <url-pattern>/loadFollowingColecction</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>comprarComic</servlet-name>
+        <url-pattern>/comprarComic</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cambiarUsuario</servlet-name>
+        <url-pattern>/cambiarUsuario</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadComicsComprados</servlet-name>
+        <url-pattern>/loadComicsComprados</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

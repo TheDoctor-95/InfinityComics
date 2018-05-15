@@ -342,6 +342,44 @@ public class InfinitiComicsDAO {
         return comics;
 
     }
+    
+    public List<Inventory> getAllComicsInventario(String username) throws SQLException, ClassNotFoundException {
+        this.conectar();
+
+        String query = "SELECT * FROM comic WHERE id IN (SELECT id_comic FROM inventario WHERE username='"+username+"')";
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        List<Inventory> comics = new ArrayList<>();
+
+        while (rs.next()) {
+            Comic c = new Comic();
+            c.setId(rs.getInt("id"));
+            c.setTitle(rs.getString("titulo"));
+            c.setNumber(rs.getInt("number"));
+            c.setPrecio(rs.getDouble("precio"));
+            c.setUrlImg(rs.getString("urlImg"));
+            c.setAutor(rs.getString("Autor"));
+            c.setColeccion(getColeccionById(rs.getInt("id_coleccion")));
+            Inventory i = new Inventory(getCantidad(c, username), c);
+            comics.add(i);
+        }
+
+        rs.close();
+        this.desconectar();
+        return comics;
+
+    }
+    
+    private int getCantidad(Comic c, String username) throws SQLException{
+        String query = "SELECT cantidad FROM inventario where username='" + username + "' and id_comic='"+c.getId()+"'";
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        if(rs.next()){
+            return rs.getInt("cantidad");
+        }
+        return 0;
+        
+    }
 
     public Comic getComicsById(Integer id) throws SQLException, ClassNotFoundException {
         this.conectar();
@@ -413,7 +451,7 @@ public class InfinitiComicsDAO {
     }
 
     public boolean tenerComic(Comic c, User u) throws SQLException {
-        String query = "SELECT * FROM inventario WHERE id_comic='" + c.getId() + "' and username = '" + u.getUsername() + "'";
+        String query = "SELECT * FROM inventario WHERE id_comic='" + c.getId() + "' and username = '" + u.getUsername() + "' and cantidad>0";
         Statement st = connection.createStatement();
         ResultSet rs = st.executeQuery(query);
         if (rs.next()) {
@@ -488,6 +526,9 @@ public class InfinitiComicsDAO {
         this.conectar();
         connection.setAutoCommit(false);
         try {
+            if(!tenerComic(c, tienda)){
+                throw new InfinityException(30);
+            }
             int totalprecio = (int) (user.getCash() - c.getPrecio());
             if (totalprecio >= 0) {
                 if (tenerComic(c, user)) {
@@ -536,5 +577,6 @@ public class InfinitiComicsDAO {
     private List<User> st() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 
 }

@@ -35,7 +35,7 @@ public class InfinityException extends Exception {
                 return "La colleccion ja existe";
             //ERRORES INVENTARIO
             case 30:
-                return "";
+                return "La tienda no le quedan ejemplares de este tomo";
             //ERROES FOLLOW
             case 40:
                 return "";

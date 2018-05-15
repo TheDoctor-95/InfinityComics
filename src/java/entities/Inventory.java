@@ -13,5 +13,28 @@ public class Inventory {
     
     private int cantidad;
     private Comic comic;
+
+    public Inventory(int cantidad, Comic comic) {
+        this.cantidad = cantidad;
+        this.comic = comic;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public Comic getComic() {
+        return comic;
+    }
+
+    public void setComic(Comic comic) {
+        this.comic = comic;
+    }
+    
+    
     
 }

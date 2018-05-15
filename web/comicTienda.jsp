@@ -4,6 +4,7 @@
     Author     : pablourbano
 --%>
 
+<%@page import="entities.User"%>
 <%@page import="java.util.List"%>
 <%@page import="entities.Comic"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -29,6 +30,7 @@
             <div class="row">
                 <%
                     List<Comic> list = (List<Comic>) request.getAttribute("comics");
+                    String tienda = (String) request.getAttribute("tienda");
 
                     if (list.isEmpty()) {
                 %>
@@ -41,8 +43,10 @@
                     for (Comic c : list) {
                 %>
                 <div class="col-xs-6" style="margin: 20px">
-                    <form action="./deleteComics" method="POST">
-                        <input type="hidden" name="nombreComic" value="<%=c.getId()%>" />
+                    <form action="comprarComic" method="POST">
+                        <input type="hidden" name="idComic" value="<%=c.getId()%>" />
+                        <input type="hidden" name="tienda" value="<%=tienda%>" />
+                        <input type="number" name="cantidad"/>
                         <img src="<%=c.getUrlImg()%>" height="100px"/>
                         <%=c.getColeccion().getName()%> <%=c.getNumber()%> <%=c.getTitle()%><input class="btn btn-block btn-danger" type="submit"  value="Comprar" />
                     </form>

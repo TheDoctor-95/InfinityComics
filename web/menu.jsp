@@ -35,6 +35,11 @@
                 <input value="Añadir comic al inventario" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
         </form>
+        <form method="POST" action="loadComicsComprados">
+            <div class="form-group">
+                <input value="See Stock" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
+            </div>
+        </form>
 
 
         <%} else if (e.getTipo().equals("admin")) {%>
@@ -75,12 +80,12 @@
                 <input value="Añadir dinero" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
         </form>
-        <form method="POST" action="iniciarSesion">
+        <form method="POST" action="updatUsuario.jsp">
             <div class="form-group">
-                <input value="Modificar perfil" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
+                <input value="Modificar perfil" id="updatUsuario" class="form-control" type="submit" name="updatUsuario"/>
             </div>
         </form>
-         <form method="POST" action="tiendasCiudad">
+        <form method="POST" action="tiendasCiudad">
             <div class="form-group">
                 <input value="Tiendas de una ciudad" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
@@ -90,6 +95,11 @@
             </div>
         </form>
 
+        <form method="POST" action="loadComicsComprados">
+            <div class="form-group">
+                <input value="Buyed Comics" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
+            </div>
+        </form>
         <%}%>
 
         <%} else {

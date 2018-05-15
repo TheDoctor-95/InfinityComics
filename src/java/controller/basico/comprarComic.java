@@ -8,12 +8,11 @@ package controller.basico;
 import DAO.InfinitiComicsDAO;
 import entities.Comic;
 import entities.User;
+import exeption.InfinityException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author pablourbano
  */
-public class comicsTienda extends HttpServlet {
+public class comprarComic extends HttpServlet {
 
     InfinitiComicsDAO dao = new InfinitiComicsDAO();
     
@@ -37,18 +36,29 @@ public class comicsTienda extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-            System.out.println("comics tienda");
-            String em =  (String) request.getParameter("usernameTienda");
-            List<Comic> comic = dao.comicsByTienda(em);
-            request.setAttribute("comics", comic);
-            request.setAttribute("tienda", em);
-            request.getRequestDispatcher("comicTienda.jsp").forward(request, response);
-        } catch (SQLException | ClassNotFoundException ex) {
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            try {
+                InfinitiComicsDAO dao = new InfinitiComicsDAO();
+                Comic c = dao.getComicsById(Integer.parseInt(request.getParameter("idComic")));
+                User u = (User) request.getSession().getAttribute("user");
+                
+                User tienda =  dao.getUser(request.getParameter("tienda")) ;
+                System.out.println(c);
+                int cant = Integer.parseInt(request.getParameter("cantidad"));
+                System.out.println(u);
+                System.out.println(cant);
+                dao.comprarComic(c,u, tienda, cant);
+                request.getSession().setAttribute("user", dao.getUser(u.getUsername()));
+                request.setAttribute("status", "Comic comprado");
+                request.getRequestDispatcher("/final.jsp").forward(request, response);
+                
+            } catch (SQLException | ClassNotFoundException | InfinityException ex) {
                 request.setAttribute("status", ex.getMessage());
-               request.getRequestDispatcher("final.jsp").forward(request, response);
+                request.getRequestDispatcher("/final.jsp").forward(request, response);
+            }
         }
     }
 
@@ -64,11 +74,7 @@ public class comicsTienda extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(comicsTienda.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -82,11 +88,7 @@ public class comicsTienda extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(comicsTienda.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**

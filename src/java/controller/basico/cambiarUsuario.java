@@ -6,14 +6,11 @@
 package controller.basico;
 
 import DAO.InfinitiComicsDAO;
-import entities.Comic;
 import entities.User;
+import exeption.InfinityException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author pablourbano
  */
-public class comicsTienda extends HttpServlet {
+public class cambiarUsuario extends HttpServlet {
 
     InfinitiComicsDAO dao = new InfinitiComicsDAO();
     
@@ -37,18 +34,33 @@ public class comicsTienda extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException, SQLException {
+            throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-            System.out.println("comics tienda");
-            String em =  (String) request.getParameter("usernameTienda");
-            List<Comic> comic = dao.comicsByTienda(em);
-            request.setAttribute("comics", comic);
-            request.setAttribute("tienda", em);
-            request.getRequestDispatcher("comicTienda.jsp").forward(request, response);
-        } catch (SQLException | ClassNotFoundException ex) {
-                request.setAttribute("status", ex.getMessage());
-               request.getRequestDispatcher("final.jsp").forward(request, response);
+        try (PrintWriter out = response.getWriter()) {
+            User u1 = (User) request.getSession().getAttribute("user");
+            
+            String nombre = request.getParameter("nombre");
+            String username = request.getParameter("username");
+            String pass = request.getParameter("password");
+            String ciudad = request.getParameter("ciudad");
+            String tipo = u1.getTipo();
+            
+            User u2 = new User(nombre, username, pass, 0, ciudad, tipo);
+            try {
+                
+                if(dao.getUser(u1.getUsername())!=null){
+                    dao.updateProfile(u2);
+                }
+                
+                request.setAttribute("status", "Usuario updateado");
+            } catch (SQLException ex) {
+                request.setAttribute("status", "No se pudo dar de alta el usuario");
+            } catch (ClassNotFoundException ex) {
+               request.setAttribute("status", "No se pudo dar de alta el usuario");
+            }
+            
+            request.getRequestDispatcher("/final.jsp").forward(request, response);
+            
         }
     }
 
@@ -64,11 +76,7 @@ public class comicsTienda extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(comicsTienda.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
@@ -82,11 +90,7 @@ public class comicsTienda extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        try {
-            processRequest(request, response);
-        } catch (SQLException ex) {
-            Logger.getLogger(comicsTienda.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        processRequest(request, response);
     }
 
     /**
