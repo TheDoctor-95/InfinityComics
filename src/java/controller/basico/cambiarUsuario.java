@@ -40,23 +40,26 @@ public class cambiarUsuario extends HttpServlet {
             User u1 = (User) request.getSession().getAttribute("user");
             
             String nombre = request.getParameter("nombre");
-            String username = request.getParameter("username");
+            String username = u1.getUsername();
             String pass = request.getParameter("password");
             String ciudad = request.getParameter("ciudad");
             String tipo = u1.getTipo();
             
             User u2 = new User(nombre, username, pass, 0, ciudad, tipo);
             try {
-                
-                if(dao.getUser(u1.getUsername())!=null){
+                System.out.println("1");
+                if(dao.getUser(u1.getUsername())!= null){
+                    System.out.println("2");
                     dao.updateProfile(u2);
+                    request.setAttribute("status", "Usuario updateado");
+                }else{
+                    request.setAttribute("status", "1 No se pudo updatear el usuario");
                 }
                 
-                request.setAttribute("status", "Usuario updateado");
             } catch (SQLException ex) {
-                request.setAttribute("status", "No se pudo dar de alta el usuario");
+                request.setAttribute("status", "2 No se pudo updatear el usuario");
             } catch (ClassNotFoundException ex) {
-               request.setAttribute("status", "No se pudo dar de alta el usuario");
+               request.setAttribute("status", "3 No se pudo updatear el usuario");
             }
             
             request.getRequestDispatcher("/final.jsp").forward(request, response);

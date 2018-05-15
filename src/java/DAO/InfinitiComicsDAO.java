@@ -149,7 +149,7 @@ public class InfinitiComicsDAO {
 
     public void updateProfile(User u) throws SQLException, ClassNotFoundException {
         this.conectar();
-        String query = "UPDATE user SET nombre = " + u.getNombre() + ", password ='" + u.getPassword() + "', ciudad ='" + u.getCiudad() + "', tipo ='" + u.getTipo() + "'";
+        String query = "UPDATE user SET nombre = '" + u.getNombre() + "', password ='" + u.getPassword() + "', ciudad ='" + u.getCiudad() + "', tipo ='" + u.getTipo() + "' where username ='"+u.getUsername()+"'";
         Statement st = connection.createStatement();
         st.executeUpdate(query);
 
