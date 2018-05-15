@@ -64,6 +64,18 @@
         <servlet-name>tiendasCiudad</servlet-name>
         <servlet-class>controller.basico.tiendasCiudad</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>loadFollowCollecion</servlet-name>
+        <servlet-class>controller.basico.loadFollowCollecion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>followColeccion</servlet-name>
+        <servlet-class>controller.basico.followColeccion</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadFollowingColecction</servlet-name>
+        <servlet-class>controller.basico.loadFollowingColecction</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>conectar</servlet-name>
         <url-pattern>/conectar</url-pattern>
@@ -127,6 +139,18 @@
     <servlet-mapping>
         <servlet-name>tiendasCiudad</servlet-name>
         <url-pattern>/tiendasCiudad</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadFollowCollecion</servlet-name>
+        <url-pattern>/loadFollowCollecion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>followColeccion</servlet-name>
+        <url-pattern>/followColeccion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadFollowingColecction</servlet-name>
+        <url-pattern>/loadFollowingColecction</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

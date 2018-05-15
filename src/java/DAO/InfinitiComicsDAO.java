@@ -220,6 +220,58 @@ public class InfinitiComicsDAO {
 
     }
 
+    public List<Coleccion> getAllColeccionsNotFollowing(String username) throws SQLException, ClassNotFoundException {
+
+        this.conectar();
+
+        String query = "SELECT * FROM coleccion WHERE id NOT IN (SELECT id_coleccion FROM follow WHERE username='" + username + "')";
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        List<Coleccion> list = new ArrayList<>();
+
+        while (rs.next()) {
+
+            Coleccion c = new Coleccion();
+            c.setId(rs.getInt("id"));
+            c.setName(rs.getString("nombre"));
+            c.setType(rs.getString("type"));
+            c.setEditorial(rs.getString("editorial"));
+            list.add(c);
+
+        }
+
+        rs.close();
+        this.desconectar();
+        return list;
+
+    }
+    
+    public List<Coleccion> getAllColeccionsFollowing(String username) throws SQLException, ClassNotFoundException {
+
+        this.conectar();
+
+        String query = "SELECT * FROM coleccion WHERE id IN (SELECT id_coleccion FROM follow WHERE username='" + username + "')";
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
+        List<Coleccion> list = new ArrayList<>();
+
+        while (rs.next()) {
+
+            Coleccion c = new Coleccion();
+            c.setId(rs.getInt("id"));
+            c.setName(rs.getString("nombre"));
+            c.setType(rs.getString("type"));
+            c.setEditorial(rs.getString("editorial"));
+            list.add(c);
+
+        }
+
+        rs.close();
+        this.desconectar();
+        return list;
+
+    }
+
     private Coleccion getColeccionById(int id) throws SQLException {
 
         String query = "SELECT * FROM coleccion WHERE id='" + id + "'";
@@ -372,6 +424,19 @@ public class InfinitiComicsDAO {
         return false;
     }
 
+    public void followColeccion(Coleccion c, User u) throws SQLException, ClassNotFoundException {
+        this.conectar();
+
+        String query = "INSERT INTO follow VALUES (null,?,?)";
+        PreparedStatement ps = connection.prepareStatement(query);
+
+        ps.setInt(1, c.getId());
+        ps.setString(2, u.getUsername());
+        
+        ps.executeUpdate();
+        this.desconectar();
+    }
+
     public ArrayList<User> tiendasByCiudad(String ciudad) throws SQLException, ClassNotFoundException {
         this.conectar();
         ArrayList<User> lista = new ArrayList<>();
@@ -394,10 +459,10 @@ public class InfinitiComicsDAO {
 
     }
 
-        public ArrayList<Comic> comicsByTienda(String username) throws SQLException, ClassNotFoundException {
+    public ArrayList<Comic> comicsByTienda(String username) throws SQLException, ClassNotFoundException {
         this.conectar();
         ArrayList<Comic> lista = new ArrayList<>();
-        
+
         String query = "SELECT * FROM comic WHERE id IN (SELECT id_comic FROM inventario WHERE  username='" + username + "')";
         System.out.println(query);
         PreparedStatement ps = connection.prepareStatement(query);

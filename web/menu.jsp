@@ -36,10 +36,10 @@
             </div>
         </form>
 
-            
+
         <%} else if (e.getTipo().equals("admin")) {%>
-        
-        
+
+
         <form method="POST" action="chargeAddComic">
             <div class="form-group">
                 <input value="Añadir comic" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
@@ -60,17 +60,12 @@
                 <input value="Borrar coleccion" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
         </form>
-        
-        
+
+
         <%} else {%>
-        
-        
-        <form method="POST" action="iniciarSesion">
-            <div class="form-group">
-                <input value="Comprar comic" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
-            </div>
-        </form>
-        <form method="POST" action="iniciarSesion">
+
+
+        <form method="POST" action="loadFollowCollecion">
             <div class="form-group">
                 <input value="Seguir coleccion" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
@@ -85,21 +80,16 @@
                 <input value="Modificar perfil" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
         </form>
-        <form method="POST" action="iniciarSesion">
-            <div class="form-group">
-                <input value="Comics de una tienda" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
-            </div>
-        </form>
-        <form method="POST" action="tiendasCiudad">
+         <form method="POST" action="tiendasCiudad">
             <div class="form-group">
                 <input value="Tiendas de una ciudad" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
-        </form><form method="POST" action="iniciarSesion">
+        </form><form method="POST" action="loadFollowingColecction">
             <div class="form-group">
-                <input value="Next comics" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
+                <input value="Following Colections" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
         </form>
-        
+
         <%}%>
 
         <%} else {
