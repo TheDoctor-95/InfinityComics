@@ -1,12 +1,11 @@
 <%-- 
-    Document   : deleteColeccion
-    Created on : 14-may-2018, 17:10:12
-    Author     : TheDoctor
+    Document   : tiendaCiudad
+    Created on : 15-may-2018, 15:41:20
+    Author     : pablourbano
 --%>
 
-<%@page import="entities.Coleccion"%>
 <%@page import="java.util.List"%>
-<%@page import="entities.Comic"%>
+<%@page import="entities.User"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -25,12 +24,13 @@
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     </head>
-    <body>
-        <h1>DELETE COMICS</h1>
+    <body class="container-fluid">
+
+
         <div>
             <div class="row">
                 <%
-                    List<Coleccion> list = (List<Coleccion>) request.getAttribute("coleccions");
+                    List<User> list = (List<User>) request.getAttribute("tiendas");
 
                     if (list.isEmpty()) {
                 %>
@@ -38,25 +38,23 @@
                 <%
                 } else {
                 %>
-                
-                    <%
-                        for (Coleccion c : list) {
-                    %>
-                    <div class="col-xs-6" style="margin: 20px">
-                        <form action="./deleteColeccion" method="POST">
-                            <input type="hidden" name="idDelete" value="<%=c.getId() %>" />
-                            <%=c.getName()%> - <%=c.getType() %><input class="btn btn-block btn-danger" type="submit"  value="Borrar" />
-                        </form>
-                    </div>
-                    <%
-                        }
 
-                    %>
-                
-                <%                    }
-
-
+                <%
+                    for (User c : list) {
                 %>
+                <div class="col-xs-6" style="margin: 20px">
+                    <form action="comicsTienda" method="POST">
+                        <div class="form-group">
+                            <input type="hidden" name="usernameTienda" value="<%=c.getUsername() %>" />
+                            <%=c.getNombre() %> 
+                            <input value="Ver Comics" id="<%=c.getNombre()%>" class="form-control" type="submit" name="<%=c.getNombre()%>"/>
+                        </div>
+                    </form>
+                </div>
+                <%}%>
+
+                <%}%>
             </div>
+        </div>
     </body>
 </html>

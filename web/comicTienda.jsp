@@ -1,10 +1,9 @@
 <%-- 
-    Document   : deleteColeccion
-    Created on : 14-may-2018, 17:10:12
-    Author     : TheDoctor
+    Document   : comicTienda
+    Created on : 15-may-2018, 15:24:31
+    Author     : pablourbano
 --%>
 
-<%@page import="entities.Coleccion"%>
 <%@page import="java.util.List"%>
 <%@page import="entities.Comic"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -26,37 +25,33 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <h1>DELETE COMICS</h1>
         <div>
             <div class="row">
                 <%
-                    List<Coleccion> list = (List<Coleccion>) request.getAttribute("coleccions");
+                    List<Comic> list = (List<Comic>) request.getAttribute("comics");
 
                     if (list.isEmpty()) {
                 %>
-                NO HAY COMICS
+                <h2>NO HAY COMICS</h2>
                 <%
                 } else {
                 %>
-                
-                    <%
-                        for (Coleccion c : list) {
-                    %>
-                    <div class="col-xs-6" style="margin: 20px">
-                        <form action="./deleteColeccion" method="POST">
-                            <input type="hidden" name="idDelete" value="<%=c.getId() %>" />
-                            <%=c.getName()%> - <%=c.getType() %><input class="btn btn-block btn-danger" type="submit"  value="Borrar" />
-                        </form>
-                    </div>
-                    <%
-                        }
 
-                    %>
-                
-                <%                    }
-
-
+                <%
+                    for (Comic c : list) {
                 %>
+                <div class="col-xs-6" style="margin: 20px">
+                    <form action="./deleteComics" method="POST">
+                        <input type="hidden" name="nombreComic" value="<%=c.getId()%>" />
+                        <img src="<%=c.getUrlImg()%>" height="100px"/>
+                        <%=c.getColeccion().getName()%> <%=c.getNumber()%> <%=c.getTitle()%><input class="btn btn-block btn-danger" type="submit"  value="Comprar" />
+                    </form>
+                </div>
+                <%}%>
+
+                <%}%>
+
             </div>
+        </div>
     </body>
 </html>

@@ -90,7 +90,7 @@
                 <input value="Comics de una tienda" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
         </form>
-        <form method="POST" action="iniciarSesion">
+        <form method="POST" action="tiendasCiudad">
             <div class="form-group">
                 <input value="Tiendas de una ciudad" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
