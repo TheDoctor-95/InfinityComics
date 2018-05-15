@@ -47,6 +47,7 @@ public class addStockTienda extends HttpServlet {
                 System.out.println(u);
                 System.out.println(cant);
                 dao.InsertarComicInventarioTienda(u, c, cant);
+                request.getSession().setAttribute("user", dao.getUser(u.getUsername()));
                 request.setAttribute("status", "Comic añadido a stock");
                 request.getRequestDispatcher("/final.jsp").forward(request, response);
                 

@@ -13,6 +13,10 @@
         <servlet-class>controller.basico.iniciarSesion</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>anadirDinero</servlet-name>
+        <servlet-class>controller.basico.anadirDinero</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>startSQL</servlet-name>
         <servlet-class>controller.basico.startSQL</servlet-class>
     </servlet>
@@ -87,6 +91,10 @@
     <servlet-mapping>
         <servlet-name>deleteComics</servlet-name>
         <url-pattern>/deleteComics</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>anadirDinero</servlet-name>
+        <url-pattern>/anadirDinero</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>loadDeleteColeccion</servlet-name>

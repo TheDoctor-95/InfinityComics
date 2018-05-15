@@ -26,6 +26,7 @@
             if (e != null) {
         %>
         <h1>Hello <%=e.getNombre()%></h1>
+        <%=e.getCash()%>€
         <%
             if (e.getTipo().equals("tienda")) {%>
 
@@ -74,7 +75,7 @@
                 <input value="Seguir coleccion" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
         </form>
-        <form method="POST" action="iniciarSesion">
+        <form method="POST" action="añadeDinero.jsp">
             <div class="form-group">
                 <input value="Añadir dinero" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
