@@ -80,9 +80,9 @@
                 <input value="Añadir dinero" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
             </div>
         </form>
-        <form method="POST" action="iniciarSesion">
+        <form method="POST" action="updatUsuario.jsp">
             <div class="form-group">
-                <input value="Modificar perfil" id="anadirComic" class="form-control" type="submit" name="anadirComic"/>
+                <input value="Modificar perfil" id="updatUsuario" class="form-control" type="submit" name="updatUsuario"/>
             </div>
         </form>
         <form method="POST" action="iniciarSesion">
