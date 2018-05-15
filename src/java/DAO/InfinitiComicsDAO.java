@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Query;
 
 /**
  *
@@ -155,6 +156,7 @@ public class InfinitiComicsDAO {
         this.desconectar();
     }
 
+
     /*============================================Coleccion============================================*/
     public void insertColeccion(Coleccion c) throws SQLException, InfinityException, ClassNotFoundException {
         this.conectar();
@@ -289,6 +291,7 @@ public class InfinitiComicsDAO {
 
     }
 
+
     /*============================================Secundarias============================================*/
     public void InsertarComicInventario(User u, Comic c, Integer cantidad) throws SQLException, ClassNotFoundException {
         this.conectar();
@@ -317,45 +320,48 @@ public class InfinitiComicsDAO {
         return false;
     }
 
-    public ArrayList<User> tiendasByCiudad(String ciudad) throws SQLException {
+    public ArrayList<User> tiendasByCiudad(String ciudad) throws SQLException, ClassNotFoundException {
+        this.conectar();
         ArrayList<User> lista = new ArrayList<>();
         String query = "SELECT * FROM user WHERE ciudad='" + ciudad + "' and tipo='tienda'";
         PreparedStatement ps = connection.prepareStatement(query);
         ResultSet rs = ps.executeQuery(query);
-        if (rs.next()) {
-            while (rs.next()) {
-                User u = new User();
-                u.setUsername(rs.getString("username"));
-                u.setPassword(rs.getString("password"));
-                u.setCash(rs.getDouble("cash"));
-                u.setCiudad(rs.getString("ciudad"));
-                u.setTipo(rs.getString("tipo"));
-                lista.add(u);
-            }
-            return lista;
+
+        while (rs.next()) {
+            User u = new User();
+            u.setNombre(rs.getString("nombre"));
+            u.setUsername(rs.getString("username"));
+            u.setPassword(rs.getString("password"));
+            u.setCash(rs.getDouble("cash"));
+            u.setCiudad(rs.getString("ciudad"));
+            u.setTipo(rs.getString("tipo"));
+            lista.add(u);
         }
+        this.desconectar();
         return lista;
+
     }
 
-    public ArrayList<Comic> comicsByTienda(String username) throws SQLException {
+    public ArrayList<Comic> comicsByTienda(String username) throws SQLException, ClassNotFoundException {
+        this.conectar();
         ArrayList<Comic> lista = new ArrayList<>();
         String query = "SELECT * FROM inventario WHERE username='" + username + "'";
         PreparedStatement ps = connection.prepareStatement(query);
         ResultSet rs = ps.executeQuery(query);
-        if (rs.next()) {
-            while (rs.next()) {
-                Comic c = new Comic();
-                c.setId(rs.getInt("id"));
-                c.setTitle(rs.getString("titulo"));
-                c.setPrecio(rs.getInt("precio"));
-                c.setUrlImg(rs.getString("urlImg"));
-                c.setAutor(rs.getString("Autor"));
-                c.setColeccion((Coleccion) rs.getObject("id_coleccion"));
-                lista.add(c);
-            }
-            return lista;
+
+        while (rs.next()) {
+            Comic c = new Comic();
+            c.setId(rs.getInt("id"));
+            c.setTitle(rs.getString("titulo"));
+            c.setPrecio(rs.getInt("precio"));
+            c.setUrlImg(rs.getString("urlImg"));
+            c.setAutor(rs.getString("Autor"));
+            c.setColeccion((Coleccion) rs.getObject("id_coleccion"));
+            lista.add(c);
         }
+        this.desconectar();
         return lista;
+
     }
 
     public void comprarComic(Comic c, User user, User tienda, Integer cantidad) throws SQLException, ClassNotFoundException, InfinityException {
@@ -403,6 +409,10 @@ public class InfinitiComicsDAO {
             this.desconectar();
         }
 
+    }
+
+    private List<User> st() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

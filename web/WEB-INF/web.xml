@@ -48,6 +48,14 @@
         <servlet-name>anadirDinero</servlet-name>
         <servlet-class>controller.basico.anadirDinero</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>comicsTienda</servlet-name>
+        <servlet-class>controller.basico.comicsTienda</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>tiendasCiudad</servlet-name>
+        <servlet-class>controller.basico.tiendasCiudad</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>conectar</servlet-name>
         <url-pattern>/conectar</url-pattern>
@@ -95,6 +103,14 @@
     <servlet-mapping>
         <servlet-name>anadirDinero</servlet-name>
         <url-pattern>/anadirDinero</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>comicsTienda</servlet-name>
+        <url-pattern>/comicsTienda</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>tiendasCiudad</servlet-name>
+        <url-pattern>/tiendasCiudad</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
