@@ -52,6 +52,7 @@ public class cambiarUsuario extends HttpServlet {
                     System.out.println("2");
                     dao.updateProfile(u2);
                     request.setAttribute("status", "Usuario updateado");
+                    request.getSession().setAttribute("user", u2);
                 }else{
                     request.setAttribute("status", "1 No se pudo updatear el usuario");
                 }

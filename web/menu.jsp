@@ -25,7 +25,7 @@
             User e = (User) session.getAttribute("user");
             if (e != null) {
         %>
-        <h1>Hello <%=e.getNombre()%></h1>
+        <h1 class="col-xs-10">Hello <%=e.getNombre()%></h1><div class="col-xs-2"><form action="cerrarSession" method="POST"><input type="submit" value="Cerrar Session" class="btn" /></form></div>
         <%=e.getCash()%>€
         <%
             if (e.getTipo().equals("tienda")) {%>

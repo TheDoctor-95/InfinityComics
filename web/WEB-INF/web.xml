@@ -88,6 +88,10 @@
         <servlet-name>loadComicsComprados</servlet-name>
         <servlet-class>controler.shop.loadComicsComprados</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>cerrarSession</servlet-name>
+        <servlet-class>controller.basico.cerrarSession</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>conectar</servlet-name>
         <url-pattern>/conectar</url-pattern>
@@ -175,6 +179,10 @@
     <servlet-mapping>
         <servlet-name>loadComicsComprados</servlet-name>
         <url-pattern>/loadComicsComprados</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>cerrarSession</servlet-name>
+        <url-pattern>/cerrarSession</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
