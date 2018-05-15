@@ -64,6 +64,10 @@
         <servlet-name>tiendasCiudad</servlet-name>
         <servlet-class>controller.basico.tiendasCiudad</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>comprarComic</servlet-name>
+        <servlet-class>controller.basico.comprarComic</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>conectar</servlet-name>
         <url-pattern>/conectar</url-pattern>
@@ -127,6 +131,10 @@
     <servlet-mapping>
         <servlet-name>tiendasCiudad</servlet-name>
         <url-pattern>/tiendasCiudad</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>comprarComic</servlet-name>
+        <url-pattern>/comprarComic</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
