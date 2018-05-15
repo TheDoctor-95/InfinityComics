@@ -44,6 +44,7 @@ public class comicsTienda extends HttpServlet {
             String em =  (String) request.getParameter("usernameTienda");
             List<Comic> comic = dao.comicsByTienda(em);
             request.setAttribute("comics", comic);
+            request.setAttribute("tienda", em);
             request.getRequestDispatcher("comicTienda.jsp").forward(request, response);
         } catch (SQLException | ClassNotFoundException ex) {
                 request.setAttribute("status", ex.getMessage());

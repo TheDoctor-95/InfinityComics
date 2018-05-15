@@ -45,7 +45,7 @@ public class comprarComic extends HttpServlet {
                 Comic c = dao.getComicsById(Integer.parseInt(request.getParameter("idComic")));
                 User u = (User) request.getSession().getAttribute("user");
                 
-                User tienda =  dao.getUser(request.getParameter("usernameTienda")) ;
+                User tienda =  dao.getUser(request.getParameter("tienda")) ;
                 System.out.println(c);
                 int cant = Integer.parseInt(request.getParameter("cantidad"));
                 System.out.println(u);
