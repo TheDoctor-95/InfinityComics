@@ -109,6 +109,12 @@ public class User {
     public void setFollowing(List<Coleccion> following) {
         this.following = following;
     }
+
+    @Override
+    public String toString() {
+        return "User{" + "nombre=" + nombre + ", username=" + username + ", password=" + password + ", cash=" + cash + ", ciudad=" + ciudad + ", tipo=" + tipo + ", inventario=" + inventario + ", following=" + following + '}';
+    }
+    
     
     
     

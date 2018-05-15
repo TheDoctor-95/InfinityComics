@@ -137,7 +137,7 @@ public class InfinitiComicsDAO {
         this.desconectar();
     }
 
-    public void insertarCash(User u, Integer dinero) throws SQLException, ClassNotFoundException {
+    public void insertarCash(User u, Double dinero) throws SQLException, ClassNotFoundException {
         this.conectar();
         String query = "UPDATE user SET cash = cash+" + dinero + " where username ='" + u.getUsername() + "'";
         Statement st = connection.createStatement();
@@ -289,19 +289,72 @@ public class InfinitiComicsDAO {
 
     }
 
-    /*============================================Secundarias============================================*/
-    public void InsertarComicInventario(User u, Comic c, Integer cantidad) throws SQLException, ClassNotFoundException {
+    public Comic getComicsById(Integer id) throws SQLException, ClassNotFoundException {
         this.conectar();
 
-        String query = "INSERT INTO inventario (null,?,?,?)";
-        PreparedStatement ps = connection.prepareStatement(query);
+        String query = "SELECT * FROM comic where id='" + id + "'";
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(query);
 
-        ps.setInt(1, c.getId());
-        ps.setString(2, u.getUsername());
-        ps.setInt(3, cantidad);
+        Comic c = new Comic();
+        if (rs.next()) {
+            c.setId(rs.getInt("id"));
+            c.setTitle(rs.getString("titulo"));
+            c.setNumber(rs.getInt("number"));
+            c.setPrecio(rs.getDouble("precio"));
+            c.setUrlImg(rs.getString("urlImg"));
+            c.setAutor(rs.getString("Autor"));
+            c.setColeccion(getColeccionById(rs.getInt("id_coleccion")));
 
-        ps.executeUpdate();
+        }
+
+        rs.close();
         this.desconectar();
+        return c;
+
+    }
+
+    /*============================================Secundarias============================================*/
+    public void InsertarComicInventarioTienda(User u, Comic c, Integer cantidad) throws SQLException, ClassNotFoundException, InfinityException {
+
+        this.conectar();
+        this.connection.setAutoCommit(false);
+        try {
+            if (u.getCash() >= (c.getPrecio() / 2) * cantidad) {
+                if (!tenerComic(c, u)) {
+                    String query = "INSERT INTO inventario VALUES (null,?,?,?)";
+                    System.out.println("NO TIENE EL COMIC");
+                    PreparedStatement ps = connection.prepareStatement(query);
+
+                    ps.setInt(1, c.getId());
+                    ps.setString(2, u.getUsername());
+                    ps.setInt(3, cantidad);
+                    ps.executeUpdate();
+                } else {
+                    String query = "UPDATE inventario SET cantidad=cantidad+? WHERE id_comic=? AND username=?";
+                    PreparedStatement ps = connection.prepareStatement(query);
+                    System.out.println("TIENE EL COMIC");
+                    ps.setInt(1, cantidad);
+                    ps.setInt(2, c.getId());
+                    ps.setString(3, u.getUsername());
+
+                    ps.executeUpdate();
+                }
+
+                String query = "UPDATE user SET cash = cash-" + (c.getPrecio() * cantidad / 2) + " where username ='" + u.getUsername() + "'";
+                Statement st = connection.createStatement();
+                st.executeUpdate(query);
+
+                this.connection.commit();
+
+            } else {
+                this.connection.rollback();
+                throw new InfinityException(1);
+            }
+        } finally {
+            this.connection.setAutoCommit(true);
+            this.desconectar();
+        }
 
     }
 
@@ -376,6 +429,7 @@ public class InfinitiComicsDAO {
                     st.executeUpdate(query2);
                     st.executeUpdate(query3);
                     st.executeUpdate(query4);
+                    this.connection.commit();
                 } else {
                     //no tiene el comic
                     String query1 = "UPDATE user SET cash = cash - " + c.getPrecio() + " where username = '" + user.getUsername() + "'";
@@ -393,6 +447,7 @@ public class InfinitiComicsDAO {
                     ps2.setString(2, user.getUsername());
                     ps2.setInt(3, cantidad);
                     ps2.executeUpdate();
+                    this.connection.commit();
                 }
             } else {
                 throw new InfinityException(0);

@@ -44,6 +44,14 @@
         <servlet-name>deleteColeccion</servlet-name>
         <servlet-class>controller.admin.deleteColeccion</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>loadAddStockTienda</servlet-name>
+        <servlet-class>controler.shop.loadAddStockTienda</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>addStockTienda</servlet-name>
+        <servlet-class>controler.shop.addStockTienda</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>conectar</servlet-name>
         <url-pattern>/conectar</url-pattern>
@@ -87,6 +95,14 @@
     <servlet-mapping>
         <servlet-name>deleteColeccion</servlet-name>
         <url-pattern>/deleteColeccion</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadAddStockTienda</servlet-name>
+        <url-pattern>/loadAddStockTienda</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>addStockTienda</servlet-name>
+        <url-pattern>/addStockTienda</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
